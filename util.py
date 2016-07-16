@@ -1,9 +1,6 @@
 import ctypes
 from ctypes import Structure, POINTER, c_void_p, c_size_t, c_double, c_char_p, cast
 
-from array import array
-import numpy as np
-
 lib = ctypes.cdll.LoadLibrary("libpolyline_ffi.dylib")
 
 class _FFIArray(Structure):
@@ -21,7 +18,7 @@ class _FFIArray(Structure):
         return seq if isinstance(seq, cls) else cls(seq)
 
     def __init__(self, seq, data_type = c_double):
-        arr = ((c_double * 2) * len(seq))()
+        arr = ((data_type * 2) * len(seq))()
         for i, member in enumerate(seq):
             arr[i][0] = member[0]
             arr[i][1] = member[1]
@@ -75,6 +72,7 @@ drop_array.restype = None
 
 pl = "_ibE_seK_seK_seK"
 res = decode_polyline(pl)
-print res
-print encode_coordinates(res)
+print(res)
+print(encode_coordinates(res))
+print("bye")
 
