@@ -1,7 +1,43 @@
-import ctypes
-from ctypes import Structure, POINTER, c_void_p, c_size_t, c_double, c_char_p, cast
+import os
+from sys import platform, version_info
+from ctypes import Structure, POINTER, c_void_p, c_size_t, c_double, c_char_p, cast, cdll
 
-lib = ctypes.cdll.LoadLibrary("libpolyline_ffi.dylib")
+
+file_path = os.path.dirname(__file__)
+
+if platform == "darwin":
+    prefix = 'lib'
+    ext = "dylib"
+elif "linux" in platform:
+    prefix = 'lib'
+    ext = "so"
+    fpath = os.path.join(file_path, ".libs")
+
+elif "win32" in platform:
+    prefix = ''
+    ext = 'dll'
+
+prefix = {'win32': ''}.get(platform, 'lib')
+extension = {'darwin': '.dylib', 'win32': '.dll'}.get(platform, '.so')
+
+# Python 3 check
+if (version_info > (3, 0)):
+    from subprocess import getoutput as spop
+    py3 = True
+else:
+    from subprocess import check_output as spop
+    py3 = False
+
+try:
+    lib = cdll.LoadLibrary(os.path.join(file_path, prefix + "polyline_ffi" + extension))
+except OSError:
+    # the Rust lib's been grafted by manylinux1
+    if not py3:
+        fname = spop(["ls", fpath]).split()[0]
+    else:
+        fname = spop(["ls %s" % fpath]).split()[0]
+    lib = cdll.LoadLibrary(os.path.join(file_path, ".libs", fname))
+
 
 class _FFIArray(Structure):
     """
@@ -48,7 +84,7 @@ def void_array_to_string(res, _func, _args):
     """ Dereference the FFI result to a utf8 polyline """
     result = cast(res.line, c_char_p)
     polyline = result.value
-    drop_cstring(result)
+    drop_cstring(res.line)
     return polyline
 
 decode_polyline = lib.decode_polyline_ffi
@@ -63,16 +99,9 @@ encode_coordinates.errcheck = void_array_to_string
 
 # Free FFI-allocated memory
 drop_cstring = lib.drop_cstring
-drop_cstring.argtypes = (c_char_p,)
+drop_cstring.argtypes = (c_void_p,)
 drop_cstring.restype = None
 
 drop_array = lib.drop_float_array
 drop_array.argtypes = (_FFIArray,)
 drop_array.restype = None
-
-pl = "_ibE_seK_seK_seK"
-res = decode_polyline(pl)
-print(res)
-print(encode_coordinates(res))
-print("bye")
-
