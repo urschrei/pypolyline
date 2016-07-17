@@ -1,6 +1,6 @@
 import os
 from sys import platform, version_info
-from ctypes import Structure, POINTER, c_void_p, c_size_t, c_double, c_char_p, cast, cdll
+from ctypes import Structure, POINTER, c_void_p, c_size_t, c_double, c_uint32, c_char_p, cast, cdll
 
 
 file_path = os.path.dirname(__file__)
@@ -88,12 +88,12 @@ def void_array_to_string(res, _func, _args):
     return polyline
 
 decode_polyline = lib.decode_polyline_ffi
-decode_polyline.argtypes = (c_char_p,)
+decode_polyline.argtypes = (c_char_p, c_uint32)
 decode_polyline.restype = _CoordResult
 decode_polyline.errcheck = _void_array_to_nested_list
 
 encode_coordinates = lib.encode_coordinates_ffi
-encode_coordinates.argtypes = (_FFIArray,)
+encode_coordinates.argtypes = (_FFIArray, c_uint32)
 encode_coordinates.restype = _PolylineResult
 encode_coordinates.errcheck = void_array_to_string
 
