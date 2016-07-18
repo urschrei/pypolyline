@@ -1,7 +1,7 @@
 import os
 from sys import platform, version_info
-from ctypes import Structure, POINTER, c_void_p, c_size_t, c_double, c_uint32, c_char_p, cast, cdll
-
+from ctypes import Structure, POINTER, c_void_p, c_size_t, c_double, c_uint32, c_char_p, cast, cdll, string_at
+import numpy as np
 
 file_path = os.path.dirname(__file__)
 
@@ -54,10 +54,9 @@ class _FFIArray(Structure):
         return seq if isinstance(seq, cls) else cls(seq)
 
     def __init__(self, seq, data_type = c_double):
-        arr = ((data_type * 2) * len(seq))()
-        for i, member in enumerate(seq):
-            arr[i][0] = member[0]
-            arr[i][1] = member[1]
+        ptr = POINTER(data_type)
+        nparr = np.array(seq, dtype=np.float64)
+        arr = nparr.ctypes.data_as(ptr)
         self.data = cast(arr, c_void_p)
         self.len = len(seq)
 
@@ -74,11 +73,13 @@ class _PolylineResult(Structure):
 
 def _void_array_to_nested_list(res, _func, _args):
     """ Dereference the FFI result to a list of coordinates """
-    coords = [list(pair) for pair in
-        ((POINTER(c_double * 2).from_buffer_copy(res.coords)[:res.coords.len]))
-        ]
+    shape = (res.coords.len, 2)
+    array_size = np.prod(shape)
+    mem_size = 8 * array_size
+    array_str = string_at(res.coords.data, mem_size)
+    array = np.frombuffer(array_str, float, array_size).reshape(shape).tolist()
     drop_array(res.coords)
-    return coords
+    return array
 
 def void_array_to_string(res, _func, _args):
     """ Dereference the FFI result to a utf8 polyline """
