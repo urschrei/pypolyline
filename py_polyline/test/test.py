@@ -1,5 +1,6 @@
 import unittest
 from py_polyline.util import encode_coordinates, decode_polyline
+from py_polyline.native_numpy import decode_polyline as decode_polyline_np
 
 class PolylineTests(unittest.TestCase):
     """ Tests for py_polyline """
@@ -19,6 +20,12 @@ class PolylineTests(unittest.TestCase):
         """ Test that Polylines can be decoded """
         expected = self.coords
         result = decode_polyline(self.polyline, 5)
+        self.assertEqual(result, expected)
+
+    def testDecodePolylineNumpy(self):
+        """ Test that Polylines can be decoded """
+        expected = self.coords
+        result = decode_polyline_np(self.polyline, gmaps=True)
         self.assertEqual(result, expected)
 
     def testEncodeCoordinates(self):
