@@ -14,7 +14,7 @@ class PolylineTests(unittest.TestCase):
             [52.64122, 23.68549],
             [52.64125, 23.70162]
             ]
-        self.polyline = 'ynh`IcftoCyq@Ne@ncBds@EEycB'
+        self.polyline = b'ynh`IcftoCyq@Ne@ncBds@EEycB'.encode("utf8")
 
     def testDecodePolyline(self):
         """ Test that Polylines can be decoded """
@@ -23,7 +23,7 @@ class PolylineTests(unittest.TestCase):
         self.assertEqual(result, expected)
 
     def testDecodePolylineNumpy(self):
-        """ Test that Polylines can be decoded """
+        """ Test that Polylines can be decoded (NumPy) """
         expected = self.coords
         result = decode_polyline_np(self.polyline, gmaps=True)
         self.assertEqual(result, expected)
