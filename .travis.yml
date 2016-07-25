@@ -1,0 +1,79 @@
+env:
+  global:
+    - PROJECT_NAME=pypolyline
+    - DOCKER_IMAGE=quay.io/pypa/manylinux1_x86_64
+
+matrix:
+  include:
+    - sudo: required
+      env: TARGET=x86_64-unknown-linux-gnu
+      services:
+        - docker
+    - os: osx
+      env: TARGET=x86_64-apple-darwin TRAVIS_PYTHON_VERSION=2.7.11 RELEASE_PYTHON_VERSION=-cp27
+      sudo: required
+    - os: osx
+      env: TARGET=x86_64-apple-darwin TRAVIS_PYTHON_VERSION=3.5.1 RELEASE_PYTHON_VERSION=-cp35
+      sudo: required
+
+before_install:
+  - echo $LATEST_TAG > key.txt
+  - echo $PRE_CMD
+  - bash ci/pre_install.sh
+
+install:
+  - bash ci/install.sh
+
+cache: pip
+
+script:
+  - bash ci/script.sh
+  # only run coverage reporting on OS X
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+      source venv/bin/activate;
+      python setup.py build_ext --inplace;
+      nosetests --with-coverage --cover-package $PROJECT_NAME;
+    fi
+
+branches:
+  only:
+    - master
+
+after_success:
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+      source venv/bin/activate;
+      coveralls;
+    fi
+
+before_deploy:
+  - bash ci/before_deploy.sh
+
+deploy:
+  provider: releases
+  # TODO Regenerate this api_key for your project, this one won't work for you. Here's how:
+  # - Go to 'https://github.com/settings/tokens/new' and generate a Token with only the
+  # `public_repo` scope enabled
+  # - Call `travis encrypt $github_token` where $github_token is the token you got in the previous
+  # step and `travis` is the official Travis CI gem (see https://rubygems.org/gems/travis/)
+  # - Enter the "encrypted value" below
+  api_key:
+        - secure: gintTCgG/ZR/aCm+oVoFxxetAtdGf+mPJ6hV03uaM06xW61FUORPXepVaDrOYDN6SAjcvnPUWLqI4cpAMyN0XJo837v/CT/Hy09hgQu30kv+qJeVYyTopdf12QcPtgRsVr891O8NEwOK5DbAkqtbImMek0gPGrkJKLr4WnUY14DVebCpKE7FStQffRNbzigxm5rCATk4bjbQuL8AyUdMWI1m1K0W9xcVnt9NlOIvLSqQbK/pTeuMqKyYloXPgF61inswACw7jwjyeYFZ+DG3o5D+efyCCwSUFPeLYjljrcFE8/4ug6JPFCkyUDnXk6iIYdG4ag45ZLFtA5xz6TSOpMVEhafzQnBIpiebDUq8IpUal7tWiz5n8qUkAErZnSnSkQOhIZdPOMZYPPiLm5mrEmQRiTy5S39axj9A3w/ungIBmnjcijhZheLybphl78ZJtC4MKGenH/wLwZNDN5liQq0DJq5iFNVvdVLBW/M/03zWPsWyGidzdrjwEItTc2PA6D6d0Njkaavr5KmsL7AK/7izhusJnuPB48zH+71AefZyGqt92VjCoQatndiw3DehJeK6BPc7Wpk+zuYihaHs1aV+oPSJpOpP9YnzQye+Tue4DYPWGdzCZ4qKkH7VhjITTMIKZ3iIlGjruSWlh4t/sRplZ4B7UaEm0h//2trZmRg=
+  file_glob: true
+  file: ${PROJECT_NAME}-${TRAVIS_TAG}-${TARGET}${RELEASE_PYTHON_VERSION}.*
+  # don't delete the artifacts from previous phases
+  skip_cleanup: true
+  # deploy when a new tag is pushed
+  on:
+    tags: true
+
+branches:
+  only:
+    # Pushes and PR to the master branch
+    - master
+    # IMPORTANT Ruby regex to match tags. Required, or travis won't trigger deploys when a new tag
+    # is pushed. This regex matches semantic versions like v1.2.3-rc4+2016.02.22
+    - /^v\d+\.\d+\.\d+.*$/
+
+notifications:
+  email:
+    on_success: never
