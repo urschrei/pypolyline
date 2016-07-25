@@ -3,7 +3,7 @@ environment:
     CMD_IN_ENV: "cmd /E:ON /V:ON /C .\\ci\\run_with_env.cmd"
     PROJECT_NAME: pypolyline
     TARBALL_KEY:
-      secure: LxJrI1Zs9Y6K/d5EB5PIA7/eNS9K5OBuNXFvtYvWmA5NbPN5ugR3CjNmcjD+Oid3
+      secure: MqX/OpgZLeuXwE5bkFELrVsgyWaCxePXBPVBnPo8jbhIahAvVqvlJSsQbETgypXS
 
   matrix:
 
@@ -91,7 +91,7 @@ deploy:
   description: 'Binaries'
   provider: GitHub
   auth_token:
-    secure: K6Iir6jSgRNjr/7+H+3YoSy5uENblm5ae+sIAT3q5K+aO9fCBm/8BNpLTWMXP57v
+    secure: Zf4mGDVPLLpkbZCecvbunvTyQZPpNl4Q66CrMuu/XXVDDnjOoFf5qnHYC1U/zo9Z
   artifact: /.*\.zip/
   draft: false
   prerelease: false
