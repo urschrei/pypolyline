@@ -1,0 +1,9 @@
+include pypolyline/*.py
+include pypolyline/*.pyx
+include pypolyline/*.c
+include pypolyline/*.h
+include pypolyline/*.pxd
+include license.txt
+include README.md
+include README.rst
+recursive-include pypolyline *.so *.dylib *.dll *.lib
