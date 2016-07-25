@@ -23,7 +23,7 @@ class PolylineTests(unittest.TestCase):
             self.py3 = False
 
         if not self.py3:
-            self.polyline = u'ynh`IcftoCyq@Ne@ncBds@EEycB'.encode('utf8')
+            self.polyline = b'ynh`IcftoCyq@Ne@ncBds@EEycB'.encode('utf8')
         else:
             self.polyline = 'ynh`IcftoCyq@Ne@ncBds@EEycB'.encode('utf8')
 
