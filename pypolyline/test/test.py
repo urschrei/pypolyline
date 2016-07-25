@@ -1,3 +1,4 @@
+from sys import version_info
 import unittest
 from pypolyline.util import encode_coordinates, decode_polyline
 from pypolyline.native_numpy import decode_polyline as decode_polyline_np
@@ -14,7 +15,18 @@ class PolylineTests(unittest.TestCase):
             [52.64122, 23.68549],
             [52.64125, 23.70162]
             ]
-        self.polyline = b'ynh`IcftoCyq@Ne@ncBds@EEycB'.encode("utf8")
+
+
+        if (version_info > (3, 0)):
+            self.py3 = True
+        else:
+            self.py3 = False
+
+        if not self.py3:
+            self.polyline = u'ynh`IcftoCyq@Ne@ncBds@EEycB'.encode('utf8')
+        else:
+            self.polyline = 'ynh`IcftoCyq@Ne@ncBds@EEycB'.encode('utf8')
+
 
     def testDecodePolyline(self):
         """ Test that Polylines can be decoded """
