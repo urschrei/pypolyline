@@ -1,6 +1,6 @@
 import unittest
-from py_polyline.util import encode_coordinates, decode_polyline
-from py_polyline.native_numpy import decode_polyline as decode_polyline_np
+from pypolyline.util import encode_coordinates, decode_polyline
+from pypolyline.native_numpy import decode_polyline as decode_polyline_np
 
 class PolylineTests(unittest.TestCase):
     """ Tests for py_polyline """
