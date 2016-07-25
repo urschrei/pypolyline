@@ -54,14 +54,25 @@ def decode_polyline(point_str, gmaps=False):
     points = []
     prev_x = 0
     prev_y = 0
-    for i in xrange(0, len(coords) - 1, 2):
-        if coords[i] == 0 and coords[i + 1] == 0:
-            continue
-        prev_x += coords[i + 1]
-        prev_y += coords[i]
-        # rounding to 6 digits ensures that the floats are the same as when 
-        # they were encoded
-        points.append([round(prev_y, 6), round(prev_x, 6)])
+    if not py3:
+        for i in xrange(0, len(coords) - 1, 2):
+            if coords[i] == 0 and coords[i + 1] == 0:
+                continue
+            prev_x += coords[i + 1]
+            prev_y += coords[i]
+            # rounding to 6 digits ensures that the floats are the same as when 
+            # they were encoded
+            points.append([round(prev_y, 6), round(prev_x, 6)])
+    else:
+        for i in range(0, len(coords) - 1, 2):
+            if coords[i] == 0 and coords[i + 1] == 0:
+                continue
+            prev_x += coords[i + 1]
+            prev_y += coords[i]
+            # rounding to 6 digits ensures that the floats are the same as when 
+            # they were encoded
+            points.append([round(prev_y, 6), round(prev_x, 6)])
+
     if len(points) > 1:
         return points
     else:
