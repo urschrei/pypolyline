@@ -1,3 +1,5 @@
+from sys import version_info
+
 def decode_polyline(point_str, gmaps=False):
     """
     Decodes a polyline that has been encoded using Google's algorithm
@@ -10,12 +12,19 @@ def decode_polyline(point_str, gmaps=False):
     returns: LineString instance
     """
     # some coordinate offsets are represented by 4 to 5 binary chunks
+    if (version_info > (3, 0)):
+        py3 = True
+    else:
+        py3 = False
     if not len(point_str):
         return np.nan
     coord_chunks = [[]]
     for char in point_str:
         # convert each character to decimal from ascii
-        value = ord(char) - 63
+        if not py3:
+            value = ord(char) - 63
+        else:
+            value = char - 63
         # values that have a chunk following have an extra 1 on the left
         split_after = not (value & 0x20)   
         value &= 0x1F
