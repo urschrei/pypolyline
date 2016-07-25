@@ -67,11 +67,11 @@ test_script:
   - nosetests %PROJECT_NAME%
 
 after_test:
-  # - cd C:/projects/convertbng
+  # - cd C:/projects/%PROJECT_NAME%
   # needlessly generate pyd in-place, so I can peer at its dependencies
   # - python.exe setup.py build_ext --inplace
-  # - "%CMD_IN_ENV% dumpbin /dependents convertbng/cutil.pyd"
-  # - "%CMD_IN_ENV% dumpbin /dependents convertbng/lonlat_bng.dll"
+  # - "%CMD_IN_ENV% dumpbin /dependents %PROJECT_NAME%/cutil.pyd"
+  # - "%CMD_IN_ENV% dumpbin /dependents %PROJECT_NAME%/polyline_ffi.dll"
 
 artifacts:
   # Archive the generated packages in the ci.appveyor.com build report.
@@ -80,7 +80,7 @@ artifacts:
 before_deploy:
   # Generate artifacts for release
   - cd C:/projects/%PROJECT_NAME%/dist
-    # release zipfile will look like 'convertbng-v1.2.3-x86_64-pc-windows-gnu'
+    # release zipfile will look like 'pypolyline-v1.2.3-x86_64-pc-windows-gnu'
   - 7z a ../%PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%TARGET%-%PYTHON_RELEASE_VERSION%.zip *
   - appveyor PushArtifact ../%PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%TARGET%-%PYTHON_RELEASE_VERSION%.zip
 
