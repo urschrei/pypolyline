@@ -64,7 +64,7 @@ else:
     py3 = False
 
 try:
-    lib = cdll.LoadLibrary(os.path.join(file_path, prefix + "polyline" + extension))
+    lib = cdll.LoadLibrary(os.path.join(file_path, prefix + "polyline_ffi" + extension))
 except OSError:
     # the Rust lib's been grafted by manylinux1
     if not py3:
