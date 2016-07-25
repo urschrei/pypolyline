@@ -1,1 +1,1 @@
-# None needed
+numpy >= 1.11.0
