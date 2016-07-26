@@ -31,7 +31,7 @@ def find_version(*file_paths):
 
 class BinaryDistribution(Distribution):
     def is_pure(self):
-        return True
+        return False
 
 version=find_version("pypolyline/util.py")
 with open('README.rst') as f:
