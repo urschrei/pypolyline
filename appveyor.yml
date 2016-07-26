@@ -17,6 +17,7 @@ environment:
       PYTHON_RELEASE_VERSION: "cp27"
       TARGET: x86_64-pc-windows-gnu
       CHANNEL: stable
+      PLATFORM: "win-amd64"
 
     - PYTHON: "C:\\Python27"
       PYTHON_VERSION: "2.7.11"
@@ -24,6 +25,7 @@ environment:
       PYTHON_ARCH: "32"
       PYTHON_RELEASE_VERSION: "cp27"
       CHANNEL: stable
+      PLATFORM: "win32"
 
     # MinGWPy isn't yet available for Python 3.5
     - PYTHON: "C:\\Python34-x64"
@@ -32,6 +34,7 @@ environment:
       PYTHON_ARCH: "64"
       PYTHON_RELEASE_VERSION: "cp35"
       CHANNEL: stable
+      PLATFORM: "win-amd64"
 
 install:
   - set OLDPATH=%PATH%
@@ -57,7 +60,7 @@ build_script:
   - python.exe ci/pre_install.py"
   - python.exe setup.py config --compiler=mingw32
   - python.exe setup.py build --compiler=mingw32
-  - python.exe setup.py bdist_wheel
+  - python.exe setup.py bdist_wheel --plat-name=%PLATFORM%
 
 test_script:
   # Run the project tests outside the project root, because it's on the PYTHONPATH
