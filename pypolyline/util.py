@@ -112,7 +112,7 @@ def _void_array_to_nested_list(res, _func, _args):
     array_size = np.prod(shape)
     mem_size = 8 * array_size
     array_str = string_at(res.coords.data, mem_size)
-    array = np.frombuffer(array_str, float, array_size).reshape(shape).tolist()
+    array = np.frombuffer(array_str, dtype="float64", count=array_size).reshape(shape).tolist()
     drop_array(res.coords)
     return array
 
