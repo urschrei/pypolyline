@@ -17,7 +17,7 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     mkdir to_test
     cd to_test
     pip install $PROJECT_NAME --no-index -f $HOME/build/urschrei/$PROJECT_NAME/wheelhouse
-    nosetests convertbng
+    nosetests $PROJECT_NAME
     cd $HOME/build/urschrei/$PROJECT_NAME
     rm -rf wheelhouse/numpy*
     # run delocate
