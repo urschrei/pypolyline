@@ -20,7 +20,7 @@ cp /io/pypolyline/libpolyline_ffi.so /usr/local/lib
 # Compile wheels
 for PYBIN in ${PYBINS[@]}; do
     ${PYBIN}/pip install -r /io/dev-requirements.txt
-    ${PYBIN}/pip wheel /io/ -w wheelhouse/
+    ${PYBIN}/python setup.py bdist_wheel /io/ --dist-dir wheelhouse/ --plat-name=manylinux1_x86_64
 done
 
 # Bundle external shared libraries into the wheels
