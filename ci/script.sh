@@ -21,5 +21,5 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     cd $HOME/build/urschrei/$PROJECT_NAME
     rm -rf wheelhouse/numpy*
     # run delocate
-    repair_wheelhouse wheelhouse
+    # repair_wheelhouse wheelhouse
 fi
