@@ -32,7 +32,7 @@ THE SOFTWARE.
 
 import os
 from sys import platform, version_info
-from ctypes import Structure, POINTER, c_void_p, c_size_t, c_double, c_uint32, c_char_p, cast, cdll, string_at
+from ctypes import Structure, POINTER, c_void_p, c_size_t, c_double, c_uint32, c_char_p, cast, cdll
 import numpy as np
 
 __author__ = u"Stephan Hügel"
@@ -108,13 +108,13 @@ class _PolylineResult(Structure):
 
 def _void_array_to_nested_list(res, _func, _args):
     """ Dereference the FFI result to a list of coordinates """
-    shape = (res.coords.len, 2)
-    array_size = np.prod(shape)
-    mem_size = 8 * array_size
-    array_str = string_at(res.coords.data, mem_size)
-    array = np.frombuffer(array_str, dtype="float64", count=array_size).reshape(shape).tolist()
-    drop_array(res.coords)
-    return array
+    try:
+       shape = res.coords.len, 2
+       ptr = cast(res.coords.data, POINTER(c_double))
+       array = np.ctypeslib.as_array(ptr, shape)
+       return array.tolist()
+    finally:
+       drop_array(res.coords)
 
 def void_array_to_string(res, _func, _args):
     """ Dereference the FFI result to a utf8 polyline """
