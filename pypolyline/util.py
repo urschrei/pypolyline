@@ -34,6 +34,7 @@ import os
 from sys import platform, version_info
 from ctypes import Structure, POINTER, c_void_p, c_size_t, c_double, c_uint32, c_char_p, cast, cdll
 import numpy as np
+import ipdb
 
 __author__ = u"Stephan Hügel"
 __version__ = "0.1.0"
@@ -109,12 +110,12 @@ class _PolylineResult(Structure):
 def _void_array_to_nested_list(res, _func, _args):
     """ Dereference the FFI result to a list of coordinates """
     try:
-       shape = res.coords.len, 2
-       ptr = cast(res.coords.data, POINTER(c_double))
-       array = np.ctypeslib.as_array(ptr, shape)
-       return array.tolist()
+        shape = res.coords.len, 2
+        ptr = cast(res.coords.data, POINTER(c_double))
+        array = np.ctypeslib.as_array(ptr, shape)
+        return array.tolist()
     finally:
-       drop_array(res.coords)
+        drop_array(res.coords)
 
 def void_array_to_string(res, _func, _args):
     """ Dereference the FFI result to a utf8 polyline """
