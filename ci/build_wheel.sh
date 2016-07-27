@@ -17,6 +17,7 @@ mkdir -p /usr/local/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 export DOCKER_BUILD=true
 cp /io/pypolyline/libpolyline_ffi.so /usr/local/lib
+cp /io/pypolyline/libpolyline_ffi.so /io/pypolyline/libpolyline_ffi.so_
 # Compile wheels
 for PYBIN in ${PYBINS[@]}; do
     ${PYBIN}/pip install -r /io/dev-requirements.txt
