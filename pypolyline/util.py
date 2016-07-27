@@ -34,7 +34,6 @@ import os
 from sys import platform, version_info
 from ctypes import Structure, POINTER, c_void_p, c_size_t, c_double, c_uint32, c_char_p, cast, cdll
 import numpy as np
-import ipdb
 
 __author__ = u"Stephan Hügel"
 __version__ = "0.1.1"
