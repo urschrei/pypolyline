@@ -45,7 +45,7 @@ if platform == "darwin":
     ext = "dylib"
 elif "linux" in platform:
     prefix = 'lib'
-    ext = "so_"
+    ext = "so"
     fpath = os.path.join(file_path, ".libs")
 
 elif "win32" in platform:
