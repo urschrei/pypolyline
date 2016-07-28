@@ -60,7 +60,7 @@ deploy:
   api_key:
         - secure: ZlP5QnHGAQzTdYyRXSwPoMXqEM6SKP9kVNd+NjpAzx8yWq75t5dRNbM4tpLx95vVEAseiJp69CzRrVgg/CjG796JByKZBklrUkT6gGbBpcfq81u/M7dpc+xJ3uAupom96zMtzaEP2C2/y9uIOGkL+FH6s1AB7dvf/qXQL7dYBPCRytXEdYNJcuF0dbOESduZNunaxg4tgAMNDc5syPsc8qMag+JxmUwNvlUHuuS6dCijCIVMNHIpghoMxh+WAQoV4K9dbfsgM/+k1CfZhnhfssiUJii3tc/UbvGbnTIU1Ku1iuZNJwiF6NwOWcwGC8d2AkdPXoT2YFNI6ElQ76YizFakx92INaqi6w/lrzdytVWt/Jg2m0R4+HOE6T+jlwccwCQgo0mPVTGO0oCPCxstJOLitq/+RP2YUpxcj0lw5i0kTGWlueGzdWwTqfTLmY+nb/wRhNH0n5K0Jtwqy6ktYyDrd1ov5Ksa6hUWScEJsejfSxwYO2iC6KBP85Q6p580On1B8KLkld6SmiyOT+mYaxsLsqOb1ycPnwU+vZxcSAB9+IxStnfPtaxu6ovvF+IWzwb/ZOP1TjH6uat6ES/reER83h/dNWSXYlIzVf3HwhkEcMD9Mpe+ZOIk7g+7kfKruxnZ8537PdTbx0HpR5vG3mtR6jgQ11TvFEjwQsviPDs=
   file_glob: true
-  file: ${PROJECT_NAME}-${TRAVIS_TAG}-${TARGET}${RELEASE_PYTHON_VERSION}.*
+  file: ${PROJECT_NAME}-${TRAVIS_TAG}-${TARGET}-${RELEASE_PYTHON_VERSION}.*
   # don't delete the artifacts from previous phases
   skip_cleanup: true
   # deploy when a new tag is pushed
