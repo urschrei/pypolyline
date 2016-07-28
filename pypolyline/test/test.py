@@ -12,8 +12,13 @@ class PolylineTests(unittest.TestCase):
             [40.7, -120.95],
             [43.252, -126.453]
         ]
-        self.polyline = bytes('_p~iF~ps|U_ulLnnqC_mqNvxq`@', 'utf-8')
-        self.bad_polyline = bytes('ynh`IcftoCyq@Ne@ncB💀ds@EEycB', 'utf-8')
+        try:
+            self.polyline = bytes('_p~iF~ps|U_ulLnnqC_mqNvxq`@', 'utf-8')
+            self.bad_polyline = bytes('ynh`IcftoCyq@Ne@ncB💀ds@EEycB', 'utf-8')
+        except TypeError:
+            # python 2
+            self.polyline = '_p~iF~ps|U_ulLnnqC_mqNvxq`@'
+            self.bad_polyline = 'ynh`IcftoCyq@Ne@ncB💀ds@EEycB'
 
     def testDecodePolyline(self):
         """ Test that Polylines can be decoded """
