@@ -52,18 +52,22 @@ with open('README.rst') as f:
 #     suffix = '.c'
 
 # # Set dynamic RPATH differently, depending on platform
-# ldirs = []
-# ddirs = []
-# if "linux" in sys.platform:
-#     # from http://stackoverflow.com/a/10252190/416626
-#     # the $ORIGIN trick is not perfect, though
-#     ldirs = ["-Wl,-rpath", "-Wl,$ORIGIN"]
-# if sys.platform == 'darwin':
-#     # You must compile your binary with rpath support for this to work
-#     # RUSTFLAGS="-C rpath" cargo build --release
-#     ldirs = ["-Wl,-rpath", "-Wl,@loader_path/"]
-# if sys.platform == "win32":
-#     ddirs = ['convertbng/rlib.h']
+ldirs = []
+ddirs = []
+if "linux" in sys.platform:
+    # from http://stackoverflow.com/a/10252190/416626
+    # the $ORIGIN trick is not perfect, though
+    ldirs = ["-Wl,-rpath", "-Wl,$ORIGIN"]
+    platform_lib = "libpolyline_ffi.so"
+if sys.platform == 'darwin':
+    # You must compile your binary with rpath support for this to work
+    # RUSTFLAGS="-C rpath" cargo build --release
+    platform_lib = "libpolyline_ffi.dylib"
+    ldirs = ["-Wl,-rpath", "-Wl,@loader_path/"]
+if sys.platform == "win32":
+    ddirs = ['convertbng/rlib.h']
+    platform_lib = "polyline_ffi.dll"
+
 
 # extensions = Extension("convertbng.cutil",
 #                     sources=["pypolyline/cutil" + suffix],
@@ -90,6 +94,9 @@ setup(
     url='https://github.com/urschrei/pypolyline',
     include_package_data=True,
     distclass=BinaryDistribution,
+    package_data={
+        'pypolyline': [platform_lib],
+    },
     download_url='https://github.com/urschrei/pypolyline/tarball/v%s' % version,
     keywords=['Geo', 'Polyline'],
     classifiers=[
