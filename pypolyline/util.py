@@ -36,7 +36,7 @@ from ctypes import Structure, POINTER, c_void_p, c_size_t, c_double, c_uint32, c
 import numpy as np
 
 __author__ = u"Stephan Hügel"
-__version__ = "0.1.4"
+__version__ = "0.1.5"
 
 file_path = os.path.dirname(__file__)
 
@@ -72,6 +72,15 @@ except OSError:
     else:
         fname = spop(["ls %s" % fpath]).split()[0]
     lib = cdll.LoadLibrary(os.path.join(file_path, ".libs", fname))
+
+
+class EncodingError(Exception):
+    def __init__(self, message):
+        super(EncodingError, self).__init__(message)
+
+class DecodingError(Exception):
+    def __init__(self, message):
+        super(DecodingError, self).__init__(message)
 
 
 class _FFIArray(Structure):
@@ -112,16 +121,24 @@ def _void_array_to_nested_list(res, _func, _args):
         shape = res.coords.len, 2
         ptr = cast(res.coords.data, POINTER(c_double))
         array = np.ctypeslib.as_array(ptr, shape)
+        if np.isnan(np.sum(array)):
+            raise DecodingError("Your Polyline was not valid and could not be decoded")
         return array.tolist()
     finally:
         drop_array(res.coords)
 
 def void_array_to_string(res, _func, _args):
     """ Dereference the FFI result to a utf8 polyline """
-    result = cast(res.line, c_char_p)
-    polyline = result.value
-    drop_cstring(res.line)
-    return polyline
+    try:
+        result = cast(res.line, c_char_p)
+        polyline = result.value
+        if polyline.startswith("Latitude"):
+            raise EncodingError("%s. Latitudes must be between -90.0 and 90.0" % polyline)
+        elif polyline.startswith("Longitude"):
+            raise EncodingError("%s. Longitudes must be between -180.0 and 180.0" % polyline)
+        return polyline
+    finally:
+        drop_cstring(res.line)
 
 decode_polyline = lib.decode_polyline_ffi
 decode_polyline.argtypes = (c_char_p, c_uint32)

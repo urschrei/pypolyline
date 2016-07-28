@@ -33,8 +33,8 @@ polyline = encode_coordinates(coords, 5)
 decoded_coords = decode_polyline(polyline, 5)
 ```
 
-Attempts to decode an invalid Polyline will return `[[NaN, NaN]]`  
-Attempts to encode invalid coordinates will return `Couldn't decode Polyline`
+Attempts to decode an invalid Polyline will return `util.EncodingError`  
+Attempts to encode invalid coordinates will return `util.DecodingError`
 
 ## How it Works
 FFI using `ctypes` and a [Rust binary](https://github.com/urschrei/polyline-ffi)

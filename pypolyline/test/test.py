@@ -1,6 +1,6 @@
-from sys import version_info
+# -*- coding: utf-8 -*-
 import unittest
-from pypolyline.util import encode_coordinates, decode_polyline
+from pypolyline.util import encode_coordinates, decode_polyline, EncodingError, DecodingError
 from pypolyline.native_numpy import decode_polyline as decode_polyline_np
 
 class PolylineTests(unittest.TestCase):
@@ -9,24 +9,11 @@ class PolylineTests(unittest.TestCase):
     def setUp(self):
         """ make these available to all tests """
         self.coords = [
-            [52.64125, 23.70162],
-            [52.64938, 23.70154],
-            [52.64957, 23.68546],
-            [52.64122, 23.68549],
-            [52.64125, 23.70162]
-            ]
-
-
-        if (version_info > (3, 0)):
-            self.py3 = True
-        else:
-            self.py3 = False
-
-        if not self.py3:
-            self.polyline = b'ynh`IcftoCyq@Ne@ncBds@EEycB'.encode('utf8')
-        else:
-            self.polyline = 'ynh`IcftoCyq@Ne@ncBds@EEycB'.encode('utf8')
-
+            [38.5, -120.2],
+            [40.7, -120.95],
+            [43.252, -126.453]
+        ]
+        self.polyline = '_p~iF~ps|U_ulLnnqC_mqNvxq`@'
 
     def testDecodePolyline(self):
         """ Test that Polylines can be decoded """
@@ -46,3 +33,15 @@ class PolylineTests(unittest.TestCase):
         expected = self.polyline 
         result = encode_coordinates(self.coords, 5)
         self.assertEqual(result, expected)
+
+    def testBadCoordinates(self):
+        """ Test that bad coordinates return the correct string """
+        coords = [[110., 95.], [1., 2.]]
+        with self.assertRaises(EncodingError):
+            encode_coordinates(coords, 5)
+
+    def testDecodeBadPolyline(self):
+        """ Test that Polylines return NaN """
+        polyline = 'ynh`IcftoCyq@Ne@ncB💀ds@EEycB'
+        with self.assertRaises(DecodingError):
+            decode_polyline(polyline, 5)
