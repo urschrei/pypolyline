@@ -1,10 +1,29 @@
 Fast Google Polyline Encoding and Decoding
 ==========================================
 
+Installation
+------------
+
+``pip install pypolyline``
+Please use a recent (>= 8.1.2) version of ``pip``.
+
+Supported Python Versions
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Python 2.7 Python 3.5
+
+Supported Platforms
+~~~~~~~~~~~~~~~~~~~
+
+
+-  Linux (manylinux1-compatible)
+-  OS X
+-  Windows 32-bit / 64-bit
+
 Usage
 -----
 
-::
+.. code-block:: python
 
     from pypolyline.util import encode_coordinates, decode_polyline
 
@@ -21,13 +40,18 @@ Usage
     # polyline is 'ynh`IcftoCyq@Ne@ncBds@EEycB'
     decoded_coords = decode_polyline(polyline, 5)
 
+Attempts to decode an invalid Polyline will return ``[[NaN, NaN]]``
+
+Attempts to encode invalid coordinates will return
+``Couldn't decode Polyline``
+
 How it Works
 ------------
 
-FFI using ``ctypes`` and a `Rust
-binary <https://github.com/urschrei/polyline-ffi>`__
+FFI using ``ctypes`` and a
+`Rust binary <https://github.com/urschrei/polyline-ffi>`_
 
 License
 -------
 
-`MIT <license.txt>`__
+`MIT <license.txt>`_
