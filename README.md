@@ -25,7 +25,7 @@ coords = [
             [52.64957, 23.68546],
             [52.64122, 23.68549],
             [52.64125, 23.70162]
-        ]
+         ]
 
 # precision is 5 for Google Polyline, 6 for OSRM / Valhalla
 polyline = encode_coordinates(coords, 5)
