@@ -5,7 +5,7 @@ mk_tarball() {
     # create a "staging" directory
     local td=$(echo $(mktemp -d 2>/dev/null || mktemp -d -t tmp))
     local out_dir=$(pwd)
-    cp $HOME/build/urschrei/convertbng/wheelhouse/*.whl $td
+    cp $HOME/build/urschrei/$PROJECT_NAME/wheelhouse/*.whl $td
 
     
     if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
