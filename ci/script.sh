@@ -10,7 +10,7 @@ if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
 fi
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    export PLATNAME="macosx_10_6_intel.macosx_10_9_intel.macosx_10_9_x86_64.macosx_10_10_intel.macosx_10_10_x86_64.macosx_10_11_intel.macosx_10_11_x86_64"
+    export PLATNAME=macosx_10_6_intel
     source ci/osx_utils.sh
     source venv/bin/activate
     pip wheel . -w wheelhouse --no-deps --build-option --plat-name=$PLATNAME
