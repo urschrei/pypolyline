@@ -40,9 +40,9 @@ Usage
     # polyline is 'ynh`IcftoCyq@Ne@ncBds@EEycB'
     decoded_coords = decode_polyline(polyline, 5)
 
-Attempts to decode an invalid Polyline will return ``util.DecodingError``
+Attempts to decode an invalid Polyline will throw ``util.DecodingError``
 
-Attempts to encode invalid coordinates will return ``util.EncodingError``
+Attempts to encode invalid coordinates will throw ``util.EncodingError``
 
 
 How it Works
