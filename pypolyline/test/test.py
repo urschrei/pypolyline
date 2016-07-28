@@ -34,11 +34,12 @@ class PolylineTests(unittest.TestCase):
         self.assertEqual(result, expected)
 
     def testBadCoordinates(self):
-        """ Test that bad coordinates return the correct string """
+        """ Test that bad coordinates throw the correct error """
         coords = [[110., 95.], [1., 2.]]
         with self.assertRaises(EncodingError):
             encode_coordinates(coords, 5)
 
     def testDecodeBadPolyline(self):
+        """ Test that bad Polylines throw the correct error """
         with self.assertRaises(DecodingError):
             decode_polyline(self.bad_polyline, 5)
