@@ -40,20 +40,9 @@ __version__ = "0.1.5"
 
 file_path = os.path.dirname(__file__)
 
-if platform == "darwin":
-    prefix = 'lib'
-    ext = "dylib"
-elif "linux" in platform:
-    prefix = 'lib'
-    ext = "so"
-    fpath = os.path.join(file_path, ".libs")
-
-elif "win32" in platform:
-    prefix = ''
-    ext = 'dll'
-
 prefix = {'win32': ''}.get(platform, 'lib')
 extension = {'darwin': '.dylib', 'win32': '.dll'}.get(platform, '.so')
+fpath = {'darwin': '', 'win32': ''}.get(platform, os.path.join(file_path, ".libs"))
 
 # Python 3 check
 if (version_info > (3, 0)):
