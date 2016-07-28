@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 import unittest
 from pypolyline.util import encode_coordinates, decode_polyline, EncodingError, DecodingError
 
