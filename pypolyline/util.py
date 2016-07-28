@@ -131,7 +131,7 @@ def void_array_to_string(res, _func, _args):
     """ Dereference the FFI result to a utf8 polyline """
     try:
         result = cast(res.line, c_char_p)
-        polyline = result.value
+        polyline = bytes(result.value)
         if polyline.startswith("Latitude"):
             raise EncodingError("%s. Latitudes must be between -90.0 and 90.0" % polyline)
         elif polyline.startswith("Longitude"):
