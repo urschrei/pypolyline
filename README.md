@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/urschrei/pypolyline.svg?branch=master)](https://travis-ci.org/urschrei/pypolyline) [![Build status](https://ci.appveyor.com/api/projects/status/0n7d5iwb3uqhsos6/branch/master?svg=true)](https://ci.appveyor.com/project/urschrei/pypolyline/branch/master)
+[![Build Status](https://travis-ci.org/urschrei/pypolyline.svg?branch=master)](https://travis-ci.org/urschrei/pypolyline) [![Build status](https://ci.appveyor.com/api/projects/status/0n7d5iwb3uqhsos6/branch/master?svg=true)](https://ci.appveyor.com/project/urschrei/pypolyline/branch/master) [![Coverage Status](https://coveralls.io/repos/github/urschrei/pypolyline/badge.svg?branch=master)](https://coveralls.io/github/urschrei/pypolyline?branch=master)
 
 # Fast Google [Polyline](https://developers.google.com/maps/documentation/utilities/polylinealgorithm) Encoding and Decoding
 
