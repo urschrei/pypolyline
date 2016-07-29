@@ -88,9 +88,10 @@ class _FFIArray(Structure):
 
     def __init__(self, seq, data_type = c_double):
         ptr = POINTER(data_type)
-        nparr = np.array(seq, dtype=np.float64)
-        arr = nparr.ctypes.data_as(ptr)
-        self.data = cast(arr, c_void_p)
+        self.data = cast(
+            np.array(seq, dtype=np.float64).ctypes.data_as(ptr),
+            c_void_p
+        )
         self.len = len(seq)
 
 
