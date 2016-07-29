@@ -87,9 +87,8 @@ class _FFIArray(Structure):
         return seq if isinstance(seq, cls) else cls(seq)
 
     def __init__(self, seq, data_type = c_double):
-        ptr = POINTER(data_type)
         self.data = cast(
-            np.array(seq, dtype=np.float64).ctypes.data_as(ptr),
+            np.array(seq, dtype=np.float64).ctypes.data_as(POINTER(data_type)),
             c_void_p
         )
         self.len = len(seq)
