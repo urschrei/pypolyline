@@ -4,7 +4,7 @@ util.py
 
 Created by Stephan Hügel on 2016-07-19
 
-This file is part of convertbng.
+This file is part of pypolyline.
 
 The MIT License (MIT)
 
