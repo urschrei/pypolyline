@@ -114,9 +114,9 @@ def _void_array_to_nested_list(res, _func, _args):
             raise DecodingError("Your Polyline was not valid and could not be decoded")
         return array.tolist()
     finally:
-        drop_array(res.coords)
+        _drop_array(res.coords)
 
-def void_array_to_string(res, _func, _args):
+def _void_array_to_string(res, _func, _args):
     """ Dereference the FFI result to a utf8 polyline """
     try:
         result = cast(res.line, c_char_p)
@@ -127,23 +127,45 @@ def void_array_to_string(res, _func, _args):
             raise EncodingError("%s. Longitudes must be between -180.0 and 180.0" % polyline)
         return polyline
     finally:
-        drop_cstring(res.line)
+        _drop_cstring(res.line)
 
 decode_polyline = lib.decode_polyline_ffi
 decode_polyline.argtypes = (c_char_p, c_uint32)
 decode_polyline.restype = _CoordResult
 decode_polyline.errcheck = _void_array_to_nested_list
+decode_polyline.__doc__ = """
+    Decode an encoded Polyline to coordinates.
+    Input: a Polyline string, and a precision int (5 for Google, 6 for OSM-derived).
+    Output: a list of lat, lon coordinates.
+
+    Example: decode_polyline(_p~iF~ps|U_ulLnnqC_mqNvxq`@, 5)
+    Result: [[38.5, -120.2], [40.7, -120.95], [43.252, -126.453]]
+
+    Incorrect Polyline input will throw util.DecodingError
+
+ """
 
 encode_coordinates = lib.encode_coordinates_ffi
 encode_coordinates.argtypes = (_FFIArray, c_uint32)
 encode_coordinates.restype = _PolylineResult
-encode_coordinates.errcheck = void_array_to_string
+encode_coordinates.errcheck = _void_array_to_string
+encode_coordinates.__doc__ = """
+    Encode coordinates as a Polyline.
+    Input: a list of lat, lon coordinates, and a precision int (5 for Google, 6 for OSM-derived).
+    Output: an encoded Polyline string.
+
+    Example: encode_coordinates([[38.5, -120.2], [40.7, -120.95], [43.252, -126.453]], 5)
+    Result: "_p~iF~ps|U_ulLnnqC_mqNvxq`@"
+
+    Incorrect coordinate input will throw util.EncodingError
+
+"""
 
 # Free FFI-allocated memory
-drop_cstring = lib.drop_cstring
-drop_cstring.argtypes = (c_void_p,)
-drop_cstring.restype = None
+_drop_cstring = lib.drop_cstring
+_drop_cstring.argtypes = (c_void_p,)
+_drop_cstring.restype = None
 
-drop_array = lib.drop_float_array
-drop_array.argtypes = (_FFIArray,)
-drop_array.restype = None
+_drop_array = lib.drop_float_array
+_drop_array.argtypes = (_FFIArray,)
+_drop_array.restype = None
