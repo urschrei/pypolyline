@@ -40,7 +40,7 @@ Attempts to encode invalid coordinates will throw `util.DecodingError`
 FFI using `ctypes` and a [Rust binary](https://github.com/urschrei/polyline-ffi)
 
 ## Is It Fast
-Yes.  
+…Yes.  
 You can verify this by installing `polyline`, `cgpolyencode`, then running [`benchmarks.py`](benchmarks.py). The Rust version and the C++ version run at the same speed, around 20x faster than `Polyline`.
 
 ## License

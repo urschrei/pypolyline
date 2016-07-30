@@ -21,14 +21,14 @@ cProfile.run(open('benches/benchmark_rust.py', 'rb'), 'benches/output_stats_rust
 rust = pstats.Stats('benches/output_stats_rust')
 
 cProfile.run(open('benches/benchmark_python.py', 'rb'), 'benches/output_stats_python')
-rust_cython = pstats.Stats('benches/output_stats_python')
+plain_python = pstats.Stats('benches/output_stats_python')
 
 cProfile.run(open('benches/benchmark_cgg.py', 'rb'), 'benches/output_stats_cgg')
-pyproj_ = pstats.Stats('benches/output_stats_cgg')
+cpp = pstats.Stats('benches/output_stats_cgg')
 
 print("Rust Benchmark\n")
 rust.sort_stats('cumulative').print_stats(5)
 print("Python Benchmark\n")
-rust_cython.sort_stats('cumulative').print_stats(5)
+plain_python.sort_stats('cumulative').print_stats(5)
 print("C++ Benchmark\n")
-pyproj_.sort_stats('cumulative').print_stats(5)
+cpp.sort_stats('cumulative').print_stats(5)
