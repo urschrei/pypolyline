@@ -1,3 +1,5 @@
+language: generic
+
 env:
   global:
     - PROJECT_NAME=pypolyline
