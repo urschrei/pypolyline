@@ -73,13 +73,11 @@ FFI and a
 Is It Fast
 ----------
 
-…Yes.
-You can verify this by installing ``polyline``, ``cgpolyencode``,
-then running benchmarks.py. The Rust version using ``ctypes`` and
-the C++ version run at the same speed, around 20x faster than
-``Polyline``.
-The Cythonised version runs around 40x faster than the plain Python
-version.
+| …Yes.
+| You can verify this by installing the ``polyline`` and ``cgpolyencode`` packages, then running ``benchmarks.py``.
+| 
+| The C++ version runs around **18x** faster than the pure Python version.
+| The Rust + Cython version runs around **54x** faster than the pure Python version.
 
 License
 -------
