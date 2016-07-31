@@ -2,6 +2,7 @@
 
 import unittest
 from pypolyline.util import encode_coordinates, decode_polyline, EncodingError, DecodingError
+from pypolyline.cutil import encode_coordinates as cencode_coordinates , decode_polyline as cdecode_polyline
 
 class PolylineTests(unittest.TestCase):
     """ Tests for py_polyline """
@@ -32,6 +33,19 @@ class PolylineTests(unittest.TestCase):
         """ Test that coordinates can be encoded """
         expected = self.polyline 
         result = encode_coordinates(self.coords, 5)
+        self.assertEqual(result, expected)
+
+    def testCDecodePolyline(self):
+        """ Test that Polylines can be decoded (Cython) """
+        expected = self.coords
+        result = cdecode_polyline(self.polyline, 5).tolist()
+        for _ in range(100):
+            self.assertEqual(result, expected)
+
+    def testCEncodeCoordinates(self):
+        """ Test that coordinates can be encoded (Cython) """
+        expected = self.polyline 
+        result = cencode_coordinates(self.coords, 5)
         self.assertEqual(result, expected)
 
     def testBadCoordinates(self):

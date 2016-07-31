@@ -10,10 +10,9 @@ if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
 fi
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    export PLATNAME=macosx_10_6_intel
     source ci/osx_utils.sh
     source venv/bin/activate
-    pip wheel . -w wheelhouse --no-deps --build-option --plat-name=$PLATNAME
+    pip wheel . -w wheelhouse
     ls wheelhouse
     mkdir to_test
     cd to_test
@@ -22,5 +21,5 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     cd $HOME/build/urschrei/$PROJECT_NAME
     rm -rf wheelhouse/numpy*
     # run delocate
-    # repair_wheelhouse wheelhouse
+    repair_wheelhouse wheelhouse
 fi

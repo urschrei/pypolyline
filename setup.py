@@ -39,17 +39,17 @@ with open('README.rst') as f:
 
 
 # We don't need this for now, since there's no Cython module yet
-# try:
-#     from Cython.Build import cythonize
-#     has_cython = True
-# except ImportError:
-#     has_cython = False
+try:
+    from Cython.Build import cythonize
+    has_cython = True
+except ImportError:
+    has_cython = False
 
-# # If Cython is installed, use it. Otherwise, build from source
-# if has_cython:
-#     suffix = '.pyx'
-# else:
-#     suffix = '.c'
+# If Cython is installed, use it. Otherwise, build from source
+if has_cython:
+    suffix = '.pyx'
+else:
+    suffix = '.c'
 
 # # Set dynamic RPATH differently, depending on platform
 ldirs = []
@@ -65,24 +65,24 @@ if sys.platform == 'darwin':
     platform_lib = "libpolyline_ffi.dylib"
     ldirs = ["-Wl,-rpath", "-Wl,@loader_path/"]
 if sys.platform == "win32":
-    ddirs = ['convertbng/rlib.h']
+    ddirs = ['pypolyline/header.h']
     platform_lib = "polyline_ffi.dll"
 
 
-# extensions = Extension("convertbng.cutil",
-#                     sources=["pypolyline/cutil" + suffix],
-#                     libraries=["polyline_ffi"],
-#                     depends=ddirs,
-#                     include_dirs=['pypolyline'],
-#                     library_dirs=['pypolyline'],
-#                     extra_compile_args=["-O3"],
-#                     extra_link_args=ldirs
-# )
+extensions = Extension("pypolyline.cutil",
+                    sources=["pypolyline/cutil" + suffix],
+                    libraries=["polyline_ffi"],
+                    depends=ddirs,
+                    include_dirs=['pypolyline'],
+                    library_dirs=['pypolyline'],
+                    extra_compile_args=["-O3"],
+                    extra_link_args=ldirs
+)
 
-# if has_cython:
-#     extensions = cythonize([extensions,])
-# else:
-#     extensions = [extensions,]
+if has_cython:
+    extensions = cythonize([extensions,])
+else:
+    extensions = [extensions,]
 
 setup(
     name='pypolyline',
@@ -115,6 +115,6 @@ setup(
     ],
     packages=find_packages(),
     install_requires=['numpy >= 1.11.0'],
-    # ext_modules = extensions,
+    ext_modules = extensions,
     long_description=readme
 )

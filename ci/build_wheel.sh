@@ -17,18 +17,18 @@ mkdir -p /usr/local/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 export DOCKER_BUILD=true
 cp /io/pypolyline/libpolyline_ffi.so /usr/local/lib
-cp /io/pypolyline/libpolyline_ffi.so /io/pypolyline/libpolyline_ffi.so_
+cp /io/pypolyline/cutil.so /usr/local/lib
+
 # Compile wheels
 for PYBIN in ${PYBINS[@]}; do
     ${PYBIN}/pip install -r /io/dev-requirements.txt
-    ${PYBIN}/pip wheel /io/ -w /io/wheelhouse/ --no-deps --build-option --plat-name=manylinux1_x86_64
+    ${PYBIN}/pip wheel /io/ -w wheelhouse/ --no-deps
 done
 
 # Bundle external shared libraries into the wheels
-# for whl in wheelhouse/*.whl; do
-    # auditwheel repair $whl -w /io/wheelhouse/
-    # cp wheelhouse/*.whl /io/wheelhouse
-# done
+for whl in wheelhouse/*.whl; do
+    auditwheel repair $whl -w /io/wheelhouse/
+done
 
 # Install packages and test
 for PYBIN in ${PYBINS[@]}; do
