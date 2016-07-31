@@ -38,7 +38,7 @@ class PolylineTests(unittest.TestCase):
     def testCDecodePolyline(self):
         """ Test that Polylines can be decoded (Cython) """
         expected = self.coords
-        result = cdecode_polyline(self.polyline, 5).tolist()
+        result = cdecode_polyline(self.polyline, 5)
         for _ in range(100):
             self.assertEqual(result, expected)
 

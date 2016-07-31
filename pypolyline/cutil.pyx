@@ -49,7 +49,7 @@ def encode_coordinates(coords, int precision):
 
     Example: encode_coordinates([[38.5, -120.2], [40.7, -120.95], [43.252, -126.453]], 5)
     Result: "_p~iF~ps|U_ulLnnqC_mqNvxq`@"
-    
+
     """
     cdef double[:,::1] ncoords = np.array(coords, dtype=np.float64)
     cdef _FFIArray coords_ffi
@@ -74,6 +74,6 @@ def decode_polyline(bytes polyline, int precision):
     cdef _FFIArray result = decode_polyline_ffi(to_send, precision)
     cdef double* incoming_ptr = <double*>(result.data)
     cdef double[:, ::1] view = <double[:result.len,:2:1]>incoming_ptr
-    coords = np.copy(view)
+    coords = np.copy(view).tolist()
     drop_float_array(result)
     return coords
