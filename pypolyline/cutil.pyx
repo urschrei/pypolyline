@@ -74,6 +74,6 @@ def decode_polyline(bytes polyline, int precision):
     cdef _FFIArray result = decode_polyline_ffi(to_send, precision)
     cdef double* incoming_ptr = <double*>(result.data)
     cdef double[:, ::1] view = <double[:result.len,:2:1]>incoming_ptr
-    coords = np.copy(view).tolist()
+    cdef coords = np.copy(view).tolist()
     drop_float_array(result)
     return coords

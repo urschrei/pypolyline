@@ -11,6 +11,7 @@ import re
 import io
 import sys
 from setuptools import setup, find_packages, Distribution, Extension
+import numpy
 
 def read(*names, **kwargs):
     with io.open(
@@ -71,7 +72,7 @@ extensions = Extension("pypolyline.cutil",
                     sources=["pypolyline/cutil" + suffix],
                     libraries=["polyline_ffi"],
                     depends=ddirs,
-                    include_dirs=['pypolyline'],
+                    include_dirs=['pypolyline', numpy.get_include()],
                     library_dirs=['pypolyline'],
                     extra_compile_args=["-O3"],
                     extra_link_args=ldirs
