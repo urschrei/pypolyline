@@ -36,12 +36,22 @@ decoded_coords = decode_polyline(polyline, 5)
 Attempts to decode an invalid Polyline will throw `util.EncodingError`  
 Attempts to encode invalid coordinates will throw `util.DecodingError`
 
+## Cython Module
+If you're comfortable with a lack of built-in exceptions, you may use the compiled Cython version of the functions, instead, giving a 2x speedup over the `ctypes` functions:
+```python
+from pypolyline.cutil import encode_coordinates, decode_polyline
+```
+- Longitude errors will return strings beginning with `Longitude error:`
+- Latitude errors will return strings beginning with `Latitude error:`
+- Polyline errors will return `[[nan, nan]]`
+
 ## How it Works
-FFI using `ctypes` and a [Rust binary](https://github.com/urschrei/polyline-ffi)
+FFI and a [Rust binary](https://github.com/urschrei/polyline-ffi)
 
 ## Is It Fast
 …Yes.  
-You can verify this by installing `polyline`, `cgpolyencode`, then running [`benchmarks.py`](benchmarks.py). The Rust version and the C++ version run at the same speed, around 20x faster than `Polyline`.
+You can verify this by installing `polyline`, `cgpolyencode`, then running [`benchmarks.py`](benchmarks.py). The Rust version using `ctypes` and the C++ version run at the same speed, around 20x faster than `Polyline`.  
+The Cythonised version runs around 40x faster than the plain Python version.
 
 ## License
 [MIT](license.txt)
