@@ -13,7 +13,7 @@ print("Running Rust, Python, and C++ benchmarks. 100 points, 50 runs.\n")
 
 # calibrate
 pr = profile.Profile()
-calibration = np.mean([pr.calibrate(100000) for x in xrange(5)])
+calibration = np.mean([pr.calibrate(10000) for x in xrange(5)])
 # add the bias
 profile.Profile.bias = calibration
 
