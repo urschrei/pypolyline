@@ -1,5 +1,5 @@
 import numpy as np
-from pypolyline.util import encode_coordinates
+from pypolyline.cutil import encode_coordinates
 
 # London bounding box
 N = 51.691874116909894
