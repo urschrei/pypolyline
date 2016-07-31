@@ -37,8 +37,6 @@ version=find_version("pypolyline/util.py")
 with open('README.rst') as f:
     readme = f.read()
 
-
-# We don't need this for now, since there's no Cython module yet
 try:
     from Cython.Build import cythonize
     has_cython = True
