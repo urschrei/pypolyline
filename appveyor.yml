@@ -32,7 +32,7 @@ environment:
       PYTHON_VERSION: "3.4.3"
       TARGET: x86_64-pc-windows-gnu
       PYTHON_ARCH: "64"
-      PYTHON_RELEASE_VERSION: "cp35"
+      PYTHON_RELEASE_VERSION: "cp34"
       CHANNEL: stable
       PLATFORM: "win-amd64"
 
