@@ -36,8 +36,8 @@ decoded_coords = decode_polyline(polyline, 5)
 Attempts to decode an invalid Polyline will throw `util.EncodingError`  
 Attempts to encode invalid coordinates will throw `util.DecodingError`
 
-## Cython Module
-If you're comfortable with a lack of built-in exceptions, you may use the compiled Cython version of the functions, instead, giving a 3x speedup over the `ctypes` functions:
+## Cython Module 🔥
+If you're comfortable with a lack of built-in exceptions, you may use the compiled Cython version of the functions, giving a 3x speedup over the `ctypes` functions:
 ```python
 from pypolyline.cutil import encode_coordinates, decode_polyline
 ```
