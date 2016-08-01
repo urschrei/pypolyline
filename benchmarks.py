@@ -12,23 +12,23 @@ import numpy as np
 print("Running Rust, Python, and C++ benchmarks. 100 points, 50 runs.\n")
 
 # calibrate
+print("Calibrating system")
 pr = profile.Profile()
 calibration = np.mean([pr.calibrate(10000) for x in xrange(5)])
 # add the bias
 profile.Profile.bias = calibration
+print("Calibration complete, running benchmarks")
+bmarks = [
+    ('benches/benchmark_rust.py', 'benches/output_stats_rust', 'Rust + Cython'),
+    ('benches/benchmark_python.py', 'benches/output_stats_python', 'Pure Python'),
+    ('benches/benchmark_cgg.py', 'benches/output_stats_cgg', 'C++')
+]
 
-cProfile.run(open('benches/benchmark_rust.py', 'rb'), 'benches/output_stats_rust')
-rust = pstats.Stats('benches/output_stats_rust')
+results = []
+for benchmark in bmarks:
+    cProfile.run(open(benchmark[0], 'rb'), benchmark[1])
+    results.append(pstats.Stats(benchmark[1]))
 
-cProfile.run(open('benches/benchmark_python.py', 'rb'), 'benches/output_stats_python')
-plain_python = pstats.Stats('benches/output_stats_python')
-
-cProfile.run(open('benches/benchmark_cgg.py', 'rb'), 'benches/output_stats_cgg')
-cpp = pstats.Stats('benches/output_stats_cgg')
-
-print("Rust Benchmark\n")
-rust.sort_stats('cumulative').print_stats(3)
-print("Python Benchmark\n")
-plain_python.sort_stats('cumulative').print_stats(3)
-print("C++ Benchmark\n")
-cpp.sort_stats('cumulative').print_stats(3)
+for i, benchmark in enumerate(bmarks):
+    print("%s Benchmark\n" % benchmark[2])
+    results[i].sort_stats('cumulative').print_stats(3)
