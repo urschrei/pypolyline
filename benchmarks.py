@@ -14,10 +14,10 @@ print("Running Rust, Python, and C++ benchmarks. 100 points, 50 runs.\n")
 # calibrate
 print("Calibrating system")
 pr = profile.Profile()
-calibration = np.mean([pr.calibrate(10000) for x in xrange(5)])
+calibration = np.mean([pr.calibrate(100000) for x in xrange(5)])
 # add the bias
 profile.Profile.bias = calibration
-print("Calibration complete, running benchmarks")
+print("Calibration complete, running benchmarks\n")
 bmarks = [
     ('benches/benchmark_rust.py', 'benches/output_stats_rust', 'Rust + Cython'),
     ('benches/benchmark_python.py', 'benches/output_stats_python', 'Pure Python'),
