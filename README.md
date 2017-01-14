@@ -8,7 +8,7 @@ Please use a recent (>= 8.1.2) version of `pip`.
 
 ### Supported Python Versions
 - Python 2.7
-- Python 3.5
+- Python 3.6
 
 ### Supported Platforms
 - Linux (`manylinux1`-compatible)  

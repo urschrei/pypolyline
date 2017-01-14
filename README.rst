@@ -14,7 +14,7 @@ Supported Python Versions
 
 - Python 2.7 (\*nix and Windows)
 - Python 3.4 (Windows)
-- Python 3.5 (\*nix)
+- Python 3.6 (\*nix)
 
 Supported Platforms
 ~~~~~~~~~~~~~~~~~~~
