@@ -10,7 +10,7 @@ pypolyline/libpolyline_ffi.dylib: $(RUSTDIR)/src/*.rs $(RUSTDIR)/Cargo.toml pypo
 	@echo "Running Rust tests"
 	cargo test --manifest-path=$(RUSTDIR)/Cargo.toml
 	@echo  "Rebuilding Rust release binary"
-	@cargo build --manifest-path=$(RUSTDIR)/Cargo.toml --release
+	@RUSTFLAGS='-C target-cpu=native' cargo build --manifest-path=$(RUSTDIR)/Cargo.toml --release
 	@cp $(RUSTDIR)/target/release/libpolyline_ffi.dylib pypolyline/
 
 .PHONY: clean
