@@ -13,10 +13,10 @@ matrix:
       services:
         - docker
     - os: osx
-      env: TARGET=x86_64-apple-darwin TRAVIS_PYTHON_VERSION=2.7.11 RELEASE_PYTHON_VERSION=-cp27
+      env: TARGET=x86_64-apple-darwin TRAVIS_PYTHON_VERSION=2.7.14 RELEASE_PYTHON_VERSION=-cp27
       sudo: required
     - os: osx
-      env: TARGET=x86_64-apple-darwin TRAVIS_PYTHON_VERSION=3.6.0 RELEASE_PYTHON_VERSION=-cp36
+      env: TARGET=x86_64-apple-darwin TRAVIS_PYTHON_VERSION=3.6.5 RELEASE_PYTHON_VERSION=-cp36
       sudo: required
 
 before_install:
