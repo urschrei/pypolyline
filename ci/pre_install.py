@@ -28,7 +28,7 @@ project = 'polyline-ffi'
 latest_release = requests.get(
     "https://api.github.com/repos/urschrei/%s/releases/latest" % project,
     headers={'Authorization':'token %s' % ghkey}).json()
-print(latest_release)
+# print(latest_release)
 tagname = latest_release['tag_name']
 # What platform are we on?
 if 'darwin' in platform:
@@ -50,7 +50,8 @@ fdict = {'project': project, 'tagname': tagname}
 built = url.format(**fdict)
 print(("URL:", built))
 # Get compressed archive and extract binary (and lib, on Windows)
-release = requests.get(built, headers={'Authorization':'access_token %s' % ghkey}, stream=True)     
+print("Current Python version: %s " % sys.version)
+release = requests.get(built, headers={'Authorization':'access_token %s' % ghkey}, stream=True)
 fname = os.path.splitext(built)
 content = release.content
 so = io.BytesIO(content)
