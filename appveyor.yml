@@ -78,8 +78,8 @@ build_script:
   - "%CMD_IN_ENV% pip wheel . -w dist/ --no-deps"
   - ls dist/*
   # dump rdp dll dependencies
-  - dumpbin /dependents pypolyline/rdp.dll > dumpbin_rdp_dll.txt
-  - appveyor PushArtifact dumpbin_rdp_dll.txt
+  - dumpbin /dependents pypolyline/rdp.dll > dumpbin_polyline_dll.txt
+  - appveyor PushArtifact dumpbin_polyline_dll.txt
 
 test_script:
   # create test env
