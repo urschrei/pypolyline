@@ -1,6 +1,6 @@
 
-#ifndef cheddar_generated_header_h
-#define cheddar_generated_header_h
+#ifndef cheddar_generated_my_header_h
+#define cheddar_generated_my_header_h
 
 
 #ifdef __cplusplus
@@ -10,24 +10,18 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 
-
-
-/// A C-compatible `struct` used for passing arrays across the FFI boundary
-typedef struct _FFIArray {
-    void const* data;
+typedef struct Array {
+    c_void const* data;
     size_t len;
-} _FFIArray;
+} Array;
 
+Array decode_polyline_ffi(c_char const* pl, uint32_t precision);
 
-_FFIArray decode_polyline_ffi(char* pl, int precision);
+c_char* encode_coordinates_ffi(Array coords, uint32_t precision);
 
-char* encode_coordinates_ffi(_FFIArray coords, int precision);
+void drop_float_array(Array arr);
 
-void drop_float_array(_FFIArray arr);
-
-void drop_cstring(char* p);
-
-
+void drop_cstring(c_char* p);
 
 #ifdef __cplusplus
 }
