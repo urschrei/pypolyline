@@ -150,19 +150,20 @@ class PolylineTests(unittest.TestCase):
             [52.52593, 13.41848]
         ]
         s = b"eqj_IylrpAsG[uEKo@IeK]xEm`@HSHi@??i@eEmB_J}EeTa@wCgIiBySmFzD_XPaCLyCBwCE_CCuCe@_Lg@sCWs@e@Mq@AoARm@RoIfEs@X}AXo@?i@EcAWs@]iA{@gAeAgAw@cJgGa@QeAk@}@m@e@c@qCkBk@Yo@a@aCeBeGuDc@c@}B_Dq@u@QIa@Ee@Di@HE_@S}@CMm@eBmBmDoEkHeDcFgGgIsAcByCcEu@aAuG_ImAkBqAsC_@i@Wg@cDyIWi@Wc@kB_CuEyEeHaIq@{@_A_BgEgFo@s@mCzI"
-        # encode using ctypes and cython
-        cencoded = cencode_coordinates(coords, 5)
-        encoded = encode_coordinates(coords, 5)
-        # does encoded string match Google's output?
-        self.assertEqual(encoded, s)
-        self.assertEqual(cencoded, s)
-        # decode using ctypes and cython
-        cdecoded = cdecode_polyline(cencoded, 5)
-        decoded = decode_polyline(encoded, 5)
-        # are both decoded coordinate sets equal
-        self.assertEqual(cdecoded, coords)
-        # is one of the decoded coordinate sets equal to the original input
-        self.assertEqual(decoded, coords)
+        for _ in range(10000):
+            # encode using ctypes and cython
+            cencoded = cencode_coordinates(coords, 5)
+            encoded = encode_coordinates(coords, 5)
+            # does encoded string match Google's output?
+            self.assertEqual(encoded, s)
+            self.assertEqual(cencoded, s)
+            # decode using ctypes and cython
+            cdecoded = cdecode_polyline(cencoded, 5)
+            decoded = decode_polyline(encoded, 5)
+            # are both decoded coordinate sets equal
+            self.assertEqual(cdecoded, coords)
+            # is one of the decoded coordinate sets equal to the original input
+            self.assertEqual(decoded, coords)
 
 
 
