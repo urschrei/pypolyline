@@ -154,16 +154,12 @@ class PolylineTests(unittest.TestCase):
             # encode using ctypes and cython
             cencoded = cencode_coordinates(coords, 5)
             encoded = encode_coordinates(coords, 5)
-            # does encoded string match Google's output?
-            self.assertEqual(encoded, s)
-            self.assertEqual(cencoded, s)
             # decode using ctypes and cython
             cdecoded = cdecode_polyline(cencoded, 5)
             decoded = decode_polyline(encoded, 5)
-            # are both decoded coordinate sets equal
+            # is round-tripping OK
             self.assertEqual(cdecoded, coords)
-            # is one of the decoded coordinate sets equal to the original input
             self.assertEqual(decoded, coords)
-
-
-
+            # does encoded string match Google's output?
+            self.assertEqual(encoded, s)
+            self.assertEqual(cencoded, s)
