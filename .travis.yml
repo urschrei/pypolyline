@@ -62,7 +62,7 @@ deploy:
   # step and `travis` is the official Travis CI gem (see https://rubygems.org/gems/travis/)
   # - Enter the "encrypted value" below
   api_key:
-        - secure: ZlP5QnHGAQzTdYyRXSwPoMXqEM6SKP9kVNd+NjpAzx8yWq75t5dRNbM4tpLx95vVEAseiJp69CzRrVgg/CjG796JByKZBklrUkT6gGbBpcfq81u/M7dpc+xJ3uAupom96zMtzaEP2C2/y9uIOGkL+FH6s1AB7dvf/qXQL7dYBPCRytXEdYNJcuF0dbOESduZNunaxg4tgAMNDc5syPsc8qMag+JxmUwNvlUHuuS6dCijCIVMNHIpghoMxh+WAQoV4K9dbfsgM/+k1CfZhnhfssiUJii3tc/UbvGbnTIU1Ku1iuZNJwiF6NwOWcwGC8d2AkdPXoT2YFNI6ElQ76YizFakx92INaqi6w/lrzdytVWt/Jg2m0R4+HOE6T+jlwccwCQgo0mPVTGO0oCPCxstJOLitq/+RP2YUpxcj0lw5i0kTGWlueGzdWwTqfTLmY+nb/wRhNH0n5K0Jtwqy6ktYyDrd1ov5Ksa6hUWScEJsejfSxwYO2iC6KBP85Q6p580On1B8KLkld6SmiyOT+mYaxsLsqOb1ycPnwU+vZxcSAB9+IxStnfPtaxu6ovvF+IWzwb/ZOP1TjH6uat6ES/reER83h/dNWSXYlIzVf3HwhkEcMD9Mpe+ZOIk7g+7kfKruxnZ8537PdTbx0HpR5vG3mtR6jgQ11TvFEjwQsviPDs=
+        - secure: p3uYnSxLUL4JziIPwENIPGHH0QzNMEhiuaw7tJCRBoJowb/rRNMW7cckDZKViha7/6bY3zrSUS1CMrkkZVzTeuO+7ImiEhvYuFA1nosaxhEZn8paizXhpqK9xUOmB1nM9vnk6X91tjBrnCeuR83+ko91+ArNRoKlt16yLl3pJTTwL45CL45rhD18JnRMJpDxkD8DhXUxd0RLEezDt8gAowV5Rrls61xDASGdbAcqtolVHyrlG+FKfjxPafXkv3u7l/5EQMWqNoIphIbH7LK6gL4Tr705EemYQcgtbTKB9QtNmd6fVEj+jA5RtWCQAtTeKmS+/Ldx74ZQRdKXFQp2MwsczCzXuS+XkW2bEzP5zidIqZA8yn5yh/dhdDfJ+d1tYurfHWdrNQNsnR0lXyK+RsQUe4RoMZTqs/otddxCHTTzao+9e1dsN4p8/r82Z33ZWBfYXpRY95SG0AyP3e4i85OWAf9Cq71zo++2Ib0xoANvSp7BBzyK1cJupXTUaOIBFLmJlNFZLOiPAJp/OjpyViLSrPYhr3d3w5W0f6T9RJSDGZrTvaGMISSPKoyCZERtph/cwQ0U0+6p+NXhxOi9wv219mz3Aeo+4w9Of2tix3KpYS9dWZWuEoleDQjWweEatmZi1gvArzYvknMTGZ+vcLDkmcks5L4z1rcVh6FRCKA=
   file_glob: true
   file: ${PROJECT_NAME}-${TRAVIS_TAG}-${TARGET}${RELEASE_PYTHON_VERSION}.*
   # don't delete the artifacts from previous phases
