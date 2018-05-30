@@ -6,9 +6,6 @@
         "depends": [
             "pypolyline/header.h"
         ], 
-        "extra_compile_args": [
-            "-O3"
-        ], 
         "extra_link_args": [
             "-Wl,-rpath", 
             "-Wl,@loader_path/"
