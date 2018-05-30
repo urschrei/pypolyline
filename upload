@@ -1,0 +1,6 @@
+#! /usr/bin/env bash
+
+echo "Uploading to PyPI"
+twine upload dist/* --sign --identity 39C1ED9A
+echo "Finished uploading"
+exit 0
