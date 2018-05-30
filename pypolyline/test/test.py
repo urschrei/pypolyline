@@ -158,8 +158,8 @@ class PolylineTests(unittest.TestCase):
             cdecoded = cdecode_polyline(cencoded, 5)
             decoded = decode_polyline(encoded, 5)
             # is round-tripping OK
-            self.assertEqual(cdecoded, coords)
             self.assertEqual(decoded, coords)
+            self.assertEqual(cdecoded, coords)
             # does encoded string match Google's output?
             self.assertEqual(encoded, s)
             self.assertEqual(cencoded, s)
