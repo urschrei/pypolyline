@@ -75,7 +75,7 @@ extensions = Extension("pypolyline.cutil",
                     language='c',
                     include_dirs=['pypolyline', numpy.get_include()],
                     library_dirs=['pypolyline'],
-                    extra_compile_args=["-O3"],
+                    # extra_compile_args=["-O3"],
                     extra_link_args=ldirs
 )
 
