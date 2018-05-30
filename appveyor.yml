@@ -3,7 +3,6 @@ environment:
     REPO_DIR: pypolyline
     PACKAGE_NAME: pypolyline
     BUILD_COMMIT: master
-    BUILD_DEPENDS: "cython"
     TEST_DEPENDS: "nose"
     TARBALL_KEY:
       secure: MqX/OpgZLeuXwE5bkFELrVsgyWaCxePXBPVBnPo8jbhIahAvVqvlJSsQbETgypXS
