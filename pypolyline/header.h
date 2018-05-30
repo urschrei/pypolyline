@@ -11,17 +11,17 @@ extern "C" {
 #include <stdbool.h>
 
 typedef struct Array {
-    c_void const* data;
+    void const* data;
     size_t len;
 } Array;
 
-Array decode_polyline_ffi(c_char const* pl, uint32_t precision);
+Array decode_polyline_ffi(char const* pl, uint32_t precision);
 
-c_char* encode_coordinates_ffi(Array coords, uint32_t precision);
+char* encode_coordinates_ffi(Array coords, uint32_t precision);
 
 void drop_float_array(Array arr);
 
-void drop_cstring(c_char* p);
+void drop_cstring(char* p);
 
 #ifdef __cplusplus
 }
