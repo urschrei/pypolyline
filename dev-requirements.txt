@@ -3,4 +3,3 @@ requests
 nose
 pip >= 8.1.2
 wheel >= 0.29.0
-cython==0.26.1
