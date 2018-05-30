@@ -87,12 +87,13 @@ class _FFIArray(Structure):
         return seq if isinstance(seq, cls) else cls(seq)
 
     def __init__(self, seq, data_type = c_double):
+        array = np.array(seq, dtype=np.float64)
+        self._buffer = array.data
         self.data = cast(
-            np.array(seq, dtype=np.float64).ctypes.data_as(POINTER(data_type)),
+            array.ctypes.data_as(POINTER(data_type)),
             c_void_p
         )
         self.len = len(seq)
-
 
 class _CoordResult(Structure):
     """ Container for returned FFI coordinate data """
