@@ -42,7 +42,8 @@ file_path = os.path.dirname(__file__)
 
 prefix = {'win32': ''}.get(platform, 'lib')
 extension = {'darwin': '.dylib', 'win32': '.dll'}.get(platform, '.so')
-fpath = {'darwin': '', 'win32': ''}.get(platform, os.path.join(file_path, ".libs"))
+fpath = {'darwin': '', 'win32': ''}.get(
+    platform, os.path.join(file_path, ".libs"))
 
 # Python 3 check
 if (version_info > (3, 0)):
@@ -53,7 +54,8 @@ else:
     py3 = False
 
 try:
-    lib = cdll.LoadLibrary(os.path.join(file_path, prefix + "polyline_ffi" + extension))
+    lib = cdll.LoadLibrary(os.path.join(
+        file_path, prefix + "polyline_ffi" + extension))
 except OSError:
     # the Rust lib's been grafted by manylinux1
     if not py3:
@@ -66,6 +68,7 @@ except OSError:
 class EncodingError(Exception):
     def __init__(self, message):
         super(EncodingError, self).__init__(message)
+
 
 class DecodingError(Exception):
     def __init__(self, message):
@@ -86,7 +89,7 @@ class _FFIArray(Structure):
         """  Allow implicit conversions """
         return seq if isinstance(seq, cls) else cls(seq)
 
-    def __init__(self, seq, data_type = c_double):
+    def __init__(self, seq, data_type=c_double):
         array = np.array(seq, dtype=np.float64)
         self._buffer = array.data
         self.data = cast(
@@ -94,6 +97,7 @@ class _FFIArray(Structure):
             c_void_p
         )
         self.len = len(seq)
+
 
 class _CoordResult(Structure):
     """ Container for returned FFI coordinate data """
@@ -112,10 +116,12 @@ def _void_array_to_nested_list(res, _func, _args):
         ptr = cast(res.coords.data, POINTER(c_double))
         array = np.ctypeslib.as_array(ptr, shape)
         if np.isnan(np.sum(array)):
-            raise DecodingError("Your Polyline was not valid and could not be decoded")
+            raise DecodingError(
+                "Your Polyline was not valid and could not be decoded")
         return array.tolist()
     finally:
         _drop_array(res.coords)
+
 
 def _void_array_to_string(res, _func, _args):
     """ Dereference the FFI result to a utf8 polyline """
@@ -123,12 +129,15 @@ def _void_array_to_string(res, _func, _args):
         result = cast(res.line, c_char_p)
         polyline = bytes(result.value)
         if polyline.startswith(b"Latitude"):
-            raise EncodingError("%s. Latitudes must be between -90.0 and 90.0" % polyline)
+            raise EncodingError(
+                "%s. Latitudes must be between -90.0 and 90.0" % polyline)
         elif polyline.startswith(b"Longitude"):
-            raise EncodingError("%s. Longitudes must be between -180.0 and 180.0" % polyline)
+            raise EncodingError(
+                "%s. Longitudes must be between -180.0 and 180.0" % polyline)
         return polyline
     finally:
         _drop_cstring(res.line)
+
 
 decode_polyline = lib.decode_polyline_ffi
 decode_polyline.argtypes = (c_char_p, c_uint32)
