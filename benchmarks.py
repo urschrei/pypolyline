@@ -9,12 +9,12 @@ import pstats
 import profile
 import numpy as np
 
-print("Running Rust, Python, and C++ benchmarks. 100 points, 50 runs.\n")
+print("Running Rust, Python, and C++ benchmarks. 1000 points, 500 runs.\n")
 
 # calibrate
 print("Calibrating system")
 pr = profile.Profile()
-calibration = np.mean([pr.calibrate(100000) for x in xrange(5)])
+calibration = np.mean([pr.calibrate(100000) for x in range(5)])
 # add the bias
 profile.Profile.bias = calibration
 print("Calibration complete, running benchmarks\n")

@@ -14,5 +14,5 @@ coords = zip(
     ) 
 
 if __name__ == "__main__":
-    for x in xrange(500):
+    for x in range(500):
         encode_coordinates(coords, 5)
