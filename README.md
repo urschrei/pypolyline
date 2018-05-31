@@ -50,8 +50,8 @@ FFI and a [Rust binary](https://github.com/urschrei/polyline-ffi)
 
 ## Is It Fast
 …Yes.  
-You can verify this by installing the `polyline` and `cgpolyencode` packages, then running [`benchmarks.py`](benchmarks.py).  
-On a 3.4 GHz i7, The pure-Python test runs in ~14 s. The Rust and C++ (`cgpolyencode.GPolyEncoder()`) tests take the same time to complete (~400 ms), or 35x faster.
+You can verify this by installing the `polyline` and `cgpolyencode` packages, then running [`benchmarks.py`](benchmarks.py), a calibrated benchmark using `cProfile`.  
+On a 1.8 GHz Intel Core i7, The pure-Python test runs in ~21 s, the C++ (`cgpolyencode.GPolyEncoder`) test runs in around 600 ms, and The Rust + Cython benchmark runs in around 400 ms (50% faster).
 
 ## License
 [MIT](license.txt)
