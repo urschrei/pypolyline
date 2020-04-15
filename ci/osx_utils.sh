@@ -10,14 +10,15 @@ WORKING_SDIR=working
 
 # As of 7 April 2016 - latest Python of this version with binary
 # download.
-LATEST_2p7=2.7.14
+LATEST_2p7=2.7.17
 # LATEST_2p6=2.6.6
 # LATEST_3p2=3.2.5
 # LATEST_3p3=3.3.5
-# LATEST_3p4=3.4.4
-# LATEST_3p5=3.5.1
+LATEST_3p4=3.4.4
+LATEST_3p5=3.5.9
 LATEST_3p6=3.6.5
-LATEST_3p7=3.7.0
+LATEST_3p7=3.7.6
+LATEST_3p8=3.8.1
 
 # Get our own location on this filesystem
 # MULTIBUILD_DIR=$(dirname "${BASH_SOURCE[0]}")
@@ -83,8 +84,8 @@ function fill_pyver {
         echo $LATEST_3p6
     elif [ $ver == 3 ] || [ $ver == "3.7" ]; then
         echo $LATEST_3p7
-    elif [ $ver == "3.4" ]; then
-        echo $LATEST_3p4
+    elif [ $ver == 3 ] || [ $ver == "3.8" ]; then
+        echo $LATEST_3p8
     elif [ $ver == "3.3" ]; then
         echo $LATEST_3p3
     elif [ $ver == "3.2" ]; then
@@ -127,7 +128,7 @@ function install_macpython {
     # sets $PYTHON_EXE variable to python executable
     local py_version=$(fill_pyver $1)
     local inst_ext=$(pyinst_ext_for_version $py_version)
-    local py_inst=python-$py_version-macosx10.6.$inst_ext
+    local py_inst=python-$py_version-macosx10.9.$inst_ext
     local inst_path=$DOWNLOADS_SDIR/$py_inst
     mkdir -p $DOWNLOADS_SDIR
     curl $MACPYTHON_URL/$py_version/${py_inst} > $inst_path
@@ -186,10 +187,10 @@ function make_workon_venv {
 function remove_travis_ve_pip {
     # Remove travis installs of virtualenv and pip
     if [ "$(sudo which virtualenv)" == /usr/local/bin/virtualenv ]; then
-        sudo pip uninstall -y virtualenv;
+        sudo pip2 uninstall -y virtualenv;
     fi
     if [ "$(sudo which pip)" == /usr/local/bin/pip ]; then
-        sudo pip uninstall -y pip;
+        sudo pip2 uninstall -y pip;
     fi
 }
 

@@ -9,17 +9,15 @@ PYBINS=(
   # "/opt/python/cp35-cp35m/bin"
   "/opt/python/cp36-cp36m/bin"
   "/opt/python/cp37-cp37m/bin"
+  "/opt/python/cp38-cp38/bin"
   )
 
 mkdir -p /io/wheelhouse
-# ls -la /io
-# ls -la /io/pypolyline
 echo $LD_LIBRARY_PATH
 mkdir -p /usr/local/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 export DOCKER_BUILD=true
 cp /io/pypolyline/libpolyline_ffi.so /usr/local/lib
-# cp /io/pypolyline/cutil.so /usr/local/lib
 
 # Compile wheels
 for PYBIN in ${PYBINS[@]}; do
