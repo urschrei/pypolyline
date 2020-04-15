@@ -32,7 +32,17 @@ THE SOFTWARE.
 
 import os
 from sys import platform, version_info
-from ctypes import Structure, POINTER, c_void_p, c_size_t, c_double, c_uint32, c_char_p, cast, cdll
+from ctypes import (
+    Structure,
+    POINTER,
+    c_void_p,
+    c_size_t,
+    c_double,
+    c_uint32,
+    c_char_p,
+    cast,
+    cdll,
+)
 import numpy as np
 
 __author__ = u"Stephan Hügel"
@@ -40,22 +50,22 @@ __version__ = "0.1.17"
 
 file_path = os.path.dirname(__file__)
 
-prefix = {'win32': ''}.get(platform, 'lib')
-extension = {'darwin': '.dylib', 'win32': '.dll'}.get(platform, '.so')
-fpath = {'darwin': '', 'win32': ''}.get(
-    platform, os.path.join(file_path, ".libs"))
+prefix = {"win32": ""}.get(platform, "lib")
+extension = {"darwin": ".dylib", "win32": ".dll"}.get(platform, ".so")
+fpath = {"darwin": "", "win32": ""}.get(platform, os.path.join(file_path, ".libs"))
 
 # Python 3 check
-if (version_info > (3, 0)):
+if version_info > (3, 0):
     from subprocess import getoutput as spop
+
     py3 = True
 else:
     from subprocess import check_output as spop
+
     py3 = False
 
 try:
-    lib = cdll.LoadLibrary(os.path.join(
-        file_path, prefix + "polyline_ffi" + extension))
+    lib = cdll.LoadLibrary(os.path.join(file_path, prefix + "polyline_ffi" + extension))
 except OSError:
     # the Rust lib's been grafted by manylinux1
     if not py3:
@@ -81,8 +91,8 @@ class _FFIArray(Structure):
     example: [[1.0, 2.0], [3.0, 4.0]]
 
     """
-    _fields_ = [("data", c_void_p),
-                ("len", c_size_t)]
+
+    _fields_ = [("data", c_void_p), ("len", c_size_t)]
 
     @classmethod
     def from_param(cls, seq):
@@ -92,20 +102,19 @@ class _FFIArray(Structure):
     def __init__(self, seq, data_type=c_double):
         array = np.array(seq, dtype=np.float64)
         self._buffer = array.data
-        self.data = cast(
-            array.ctypes.data_as(POINTER(data_type)),
-            c_void_p
-        )
+        self.data = cast(array.ctypes.data_as(POINTER(data_type)), c_void_p)
         self.len = len(seq)
 
 
 class _CoordResult(Structure):
     """ Container for returned FFI coordinate data """
+
     _fields_ = [("coords", _FFIArray)]
 
 
 class _PolylineResult(Structure):
     """ Container for returned FFI Polyline data """
+
     _fields_ = [("line", c_void_p)]
 
 
@@ -116,8 +125,7 @@ def _void_array_to_nested_list(res, _func, _args):
         ptr = cast(res.coords.data, POINTER(c_double))
         array = np.ctypeslib.as_array(ptr, shape)
         if np.isnan(np.sum(array)):
-            raise DecodingError(
-                "Your Polyline was not valid and could not be decoded")
+            raise DecodingError("Your Polyline was not valid and could not be decoded")
         return array.tolist()
     finally:
         _drop_array(res.coords)
@@ -130,10 +138,12 @@ def _void_array_to_string(res, _func, _args):
         polyline = bytes(result.value)
         if polyline.startswith(b"Latitude"):
             raise EncodingError(
-                "%s. Latitudes must be between -90.0 and 90.0" % polyline)
+                "%s. Latitudes must be between -90.0 and 90.0" % polyline
+            )
         elif polyline.startswith(b"Longitude"):
             raise EncodingError(
-                "%s. Longitudes must be between -180.0 and 180.0" % polyline)
+                "%s. Longitudes must be between -180.0 and 180.0" % polyline
+            )
         return polyline
     finally:
         _drop_cstring(res.line)
@@ -146,10 +156,10 @@ decode_polyline.errcheck = _void_array_to_nested_list
 decode_polyline.__doc__ = """
     Decode an encoded Polyline to coordinates.
     Input: a Polyline string, and a precision int (5 for Google, 6 for OSM-derived).
-    Output: a list of lat, lon coordinates.
+    Output: a list of lon, lat coordinates.
 
     Example: decode_polyline(_p~iF~ps|U_ulLnnqC_mqNvxq`@, 5)
-    Result: [[38.5, -120.2], [40.7, -120.95], [43.252, -126.453]]
+    Result: [[-120.2, 38.5], [-120.95, 40.7], [-126.453, 43.252]]
 
     Incorrect Polyline input will throw util.DecodingError
 
@@ -161,10 +171,10 @@ encode_coordinates.restype = _PolylineResult
 encode_coordinates.errcheck = _void_array_to_string
 encode_coordinates.__doc__ = """
     Encode coordinates as a Polyline.
-    Input: a list of lat, lon coordinates, and a precision int (5 for Google, 6 for OSM-derived).
+    Input: a list of lon, lat coordinates, and a precision int (5 for Google, 6 for OSM-derived).
     Output: an encoded Polyline string.
 
-    Example: encode_coordinates([[38.5, -120.2], [40.7, -120.95], [43.252, -126.453]], 5)
+    Example: encode_coordinates([[-120.2, 38.5], [-120.95, 40.7], [-126.453, 43.252]], 5)
     Result: "_p~iF~ps|U_ulLnnqC_mqNvxq`@"
 
     Incorrect coordinate input will throw util.EncodingError

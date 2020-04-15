@@ -17,6 +17,8 @@ Please use a recent (>= 8.1.2) version of `pip`.
 - Windows 32-bit / 64-bit 
 
 ## Usage
+Coordinates must be in (`Longitude, Latitude`) order
+
 ```python
 from pypolyline.util import encode_coordinates, decode_polyline
 
