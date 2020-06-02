@@ -15,53 +15,23 @@ import requests
 from subprocess import check_output
 from multiprocessing import Pool
 
-path = 'dist/'
+path = "dist/"
 url = "https://github.com/urschrei/pypolyline/releases/download/{tag}/pypolyline-{tag}-{target}.{extension}"
+# url = "https://github.com/urschrei/pypolyline/releases/download/{tag}/pypolyline-{tag}-{target}.{extension}"
 # get latest tag
-tag = check_output(["git", "describe", "--abbrev=0"]).strip()
+tag = check_output(["git", "describe", "--abbrev=0"]).strip().decode("utf-8")
 
 releases = [
-{
-    'tag': tag,
-    'target': 'x86_64-apple-darwin-cp27',
-    'extension': 'tar.gz'
-    },
-{
-    'tag': tag,
-    'target': 'x86_64-apple-darwin-cp36',
-    'extension': 'tar.gz'
-    },
-{
-    'tag': tag,
-    'target': 'x86_64-apple-darwin-cp37',
-    'extension': 'tar.gz'
-    },
-{
-    'tag': tag,
-    'target': 'x86_64-unknown-linux-gnu',
-    'extension': 'tar.gz'
-    },
-{
-    'tag': tag,
-    'target': 'x86_64-pc-windows-msvc-cp27',
-    'extension': 'zip'
-    },
-{
-    'tag': tag,
-    'target': 'x86_64-pc-windows-msvc-cp36',
-    'extension': 'zip'
-    },
-{
-    'tag': tag,
-    'target': 'i686-pc-windows-msvc-cp27',
-    'extension': 'zip'
-    },
-{
-    'tag': tag,
-    'target': 'i686-pc-windows-msvc-cp36',
-    'extension': 'zip'
-    }
+    {"tag": tag, "target": "x86_64-apple-darwin-cp27", "extension": "tar.gz"},
+    {"tag": tag, "target": "x86_64-apple-darwin-cp36", "extension": "tar.gz"},
+    {"tag": tag, "target": "x86_64-apple-darwin-cp37", "extension": "tar.gz"},
+    {"tag": tag, "target": "x86_64-unknown-linux-gnu", "extension": "tar.gz"},
+    {"tag": tag, "target": "x86_64-pc-windows-msvc-cp27", "extension": "zip"},
+    {"tag": tag, "target": "x86_64-pc-windows-msvc-cp36", "extension": "zip"},
+    {"tag": tag, "target": "i686-pc-windows-msvc-cp27", "extension": "zip"},
+    {"tag": tag, "target": "i686-pc-windows-msvc-cp36", "extension": "zip"},
 ]
+
 
 def retrieve(url):
     sess = requests.Session()
@@ -75,6 +45,7 @@ def retrieve(url):
         # it's a tar
         tar = tarfile.open(mode="r:gz", fileobj=io.BytesIO(retrieved.content))
         tar.extractall(path)
+
 
 urls = (url.format(**release) for release in releases)
 
