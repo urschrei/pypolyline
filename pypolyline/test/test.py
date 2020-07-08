@@ -64,17 +64,6 @@ class PolylineTests(unittest.TestCase):
         with self.assertRaises(DecodingError):
             decode_polyline(self.bad_polyline, 5)
 
-    def testFailDecode(self):
-        """ See https://github.com/urschrei/pypolyline/issues/3 """
-        ps = [(51.7157979, -1.1944854), (51.715798, -1.1944871)]
-
-        encode_coordinates(ps, 5)  # b'wvszHphhF?>'
-
-        # [[51.715798, -1.194485], [51.715798, -1.194487]]
-        decode_polyline(encode_coordinates(ps, 6), 6)
-        with self.assertRaises(DecodingError):
-            decode_polyline(encode_coordinates(ps, 5), 5)
-
     def testLongCoords(self):
         """ Test that round-tripping is OK.
         See https://github.com/urschrei/polyline-ffi/issues/1
