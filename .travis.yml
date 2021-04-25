@@ -10,7 +10,7 @@ env:
 addons:
   homebrew:
     packages:
-    - python@3
+    - python@2
 
 
 matrix:
