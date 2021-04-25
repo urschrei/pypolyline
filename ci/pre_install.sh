@@ -10,9 +10,9 @@ fi
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     brew unlink python
-    python2 -c 'import ssl; print ssl.OPENSSL_VERSION;'
+    python3 -c 'import ssl; print ssl.OPENSSL_VERSION;'
     pip install requests
-    python2 ci/pre_install.py
+    python3 ci/pre_install.py
     source ci/travis_osx_steps.sh
     before_install
  fi
