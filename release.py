@@ -22,10 +22,10 @@ url = "https://github.com/urschrei/pypolyline/releases/download/{tag}/pypolyline
 tag = check_output(["git", "describe", "--abbrev=0"]).strip().decode("utf-8")
 
 releases = [
-    {"tag": tag, "target": "x86_64-apple-darwin-cp27", "extension": "tar.gz"},
     {"tag": tag, "target": "x86_64-apple-darwin-cp36", "extension": "tar.gz"},
     {"tag": tag, "target": "x86_64-apple-darwin-cp37", "extension": "tar.gz"},
     {"tag": tag, "target": "x86_64-apple-darwin-cp38", "extension": "tar.gz"},
+    {"tag": tag, "target": "x86_64-apple-darwin-cp39", "extension": "tar.gz"},
     {"tag": tag, "target": "x86_64-unknown-linux-gnu", "extension": "tar.gz"},
     {"tag": tag, "target": "x86_64-pc-windows-msvc-cp27", "extension": "zip"},
     {"tag": tag, "target": "x86_64-pc-windows-msvc-cp36", "extension": "zip"},
