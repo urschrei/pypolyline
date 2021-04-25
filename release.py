@@ -47,13 +47,14 @@ def retrieve(url):
         tar = tarfile.open(mode="r:gz", fileobj=io.BytesIO(retrieved.content))
         tar.extractall(path)
 
+if __name__ == "__main__":
+    # main()
+    urls = (url.format(**release) for release in releases)
 
-urls = (url.format(**release) for release in releases)
-
-# let's do this in parallel
-pool = Pool(processes=5)
-# we could use map, but it consumes the entire iterable (doesn't matter for small n)
-res = pool.map_async(retrieve, urls)
-# need these if we use _async
-pool.close()
-pool.join()
+    # let's do this in parallel
+    pool = Pool()
+    # we could use map, but it consumes the entire iterable (doesn't matter for small n)
+    res = pool.map_async(retrieve, urls)
+    # need these if we use _async
+    pool.close()
+    pool.join()
