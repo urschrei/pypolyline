@@ -5,7 +5,7 @@ if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     sudo pip install -r dev-requirements.txt
     sudo pip install nosexcover
     sudo pip install python-coveralls
-    sudo python ci/pre_install.py
+    sudo python3 ci/pre_install.py
 fi
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
