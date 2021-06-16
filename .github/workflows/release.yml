@@ -1,12 +1,18 @@
 name: Release wheels
 
 on:
+  workflow_run:
+    workflows: ["Build"]
+    branches: [main]
+    types: 
+      - completed
   push:
     tags:
       - '*'
 
 jobs:
   download_artifacts:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     name: Download artifacts for ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
