@@ -1,4 +1,4 @@
-name: release wheels
+name: Release wheels
 
 on:
   push:
