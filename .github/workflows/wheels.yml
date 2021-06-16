@@ -105,14 +105,17 @@ jobs:
       id: download
       uses: actions/download-artifact@v2
       with:
-        path: ./
+        path: ./artifacts
 
     - name: 'Echo download path'
       run: echo ${{ steps.download.outputs.download-path }}
+
+    - name: 'List downloaded files'
+      run: ls ${{ steps.download.outputs.download-path }}
 
     - name: Create release and upload wheels
       uses: ncipollo/release-action@v1
       with:
         allowUpdates: true
-        artifacts: ${{ steps.download.outputs.download-path }}
+        artifacts: "${{ steps.download.outputs.download-path }}/*"
         token: ${{ secrets.GITHUB_TOKEN }}
