@@ -102,11 +102,7 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: wheels-${{ matrix.os }}
-        path: artifacts
-        
-    - name: Display structure of downloaded files
-      run: ls -R
-      working-directory: artifacts
+        path: ./
 
     - name: Create release
       uses: actions/create-release@v1
@@ -118,12 +114,9 @@ jobs:
         tag_name: ${{ github.ref }}
       env:
         GITHUB_TOKEN: ${{ github.token }}
-    - name: upload artifact to release
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
+    - name: Upload to release
+    - uses: actions/checkout@v1
+    - uses: ncipollo/release-action@v1
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: artifacts
-        asset_name: wheels-${{ matrix.os }}.tar.gz
-        asset_content_type: application/gzip
+        artifacts: "*.whl"
+        token: ${{ secrets.GITHUB_TOKEN }}
