@@ -1,4 +1,4 @@
-name: Build
+name: Build and test wheels, release on new tag
 env:
   rustlib: polyline-ffi
   wheelname: pypolyline
@@ -117,5 +117,5 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         allowUpdates: true
-        artifacts: "${{ steps.download.outputs.download-path }}/**/*"
+        artifacts: "${{ steps.download.outputs.download-path }}/**/*.*"
         token: ${{ secrets.GITHUB_TOKEN }}
