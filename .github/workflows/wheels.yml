@@ -101,14 +101,18 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Create release and upload wheels
+    - name: Download compressed artifacts
       uses: actions/download-artifact@v2
       with:
         path: ./
+
+    - name: Display structure of downloaded files
+      run: ls -R
+      working-directory: .
 
     - name: Create release and upload wheels
       uses: ncipollo/release-action@v1
       with:
         allowUpdates: true
-        artifacts: "*.whl,*.dylib,*.so"
+        artifacts: "./*.whl,./*.dylib,./*.so"
         token: ${{ secrets.GITHUB_TOKEN }}
