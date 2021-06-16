@@ -91,6 +91,8 @@ jobs:
             ./wheelhouse/*.whl
             ./wheelhouse/*.so
             ./wheelhouse/*.dylib
+            ./wheelhouse/*.lib
+            ./wheelhouse/*.dll
 
   release_artifacts:
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
@@ -106,9 +108,6 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         path: ./artifacts
-
-    - name: 'Echo download path'
-      run: echo ${{ steps.download.outputs.download-path }}
 
     - name: 'List downloaded files'
       run: ls ${{ steps.download.outputs.download-path }}/**/*.*
