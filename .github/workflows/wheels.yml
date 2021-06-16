@@ -60,13 +60,16 @@ jobs:
 
       - name: Install cibuildwheel
         run:   |
+               mkdir wheelhouse
                python -m pip install cibuildwheel==1.11.1.post1
                if [ "$RUNNER_OS" == "Linux" ]; then
                     tar -xvf ${{ steps.get-rust-lib.outputs.location }} -C ${{ env.wheelname }}
+                    cp ${{ env.wheelname }}/lib${{ env.rustlib }}.so wheelhouse
                elif [ "$RUNNER_OS" == "Windows" ]; then
                     7z x ${{ steps.get-rust-lib.outputs.location }} -o${{ env.wheelname }}
                else
                     tar -xvf ${{ steps.get-rust-lib.outputs.location }} -C ${{ env.wheelname }}
+                    cp ${{ env.wheelname }}/lib${{ env.rustlib }}.dylib wheelhouse
                fi
         shell: bash
 
@@ -84,29 +87,28 @@ jobs:
         name: Upload repaired wheels as artifact
         with:
           name: wheels-${{ matrix.os }}
-          path: ./wheelhouse/*.whl
+          path: |
+            ./wheelhouse/*.whl
+            ./wheelhouse/*.so
+            ./wheelhouse/*.dylib
 
   release_artifacts:
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-    name: Release repaired and tested wheels for ${{ matrix.os }}
+    name: Release repaired and tested wheels
     needs: build_wheels
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-20.04, macOS-10.15]
+    runs-on: ubuntu-20.04
 
     steps:
     - uses: actions/checkout@v2
 
-    - uses: actions/download-artifact@v2
+    - name: Create release and upload wheels
+      uses: actions/download-artifact@v2i
       with:
-        name: wheels-${{ matrix.os }}
         path: ./
 
     - name: Create release and upload wheels
       uses: ncipollo/release-action@v1
       with:
         allowUpdates: true
-        artifacts: "*.whl"
+        artifacts: "*.whl,*.dylib,*.so"
         token: ${{ secrets.GITHUB_TOKEN }}
