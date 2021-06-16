@@ -83,5 +83,5 @@ jobs:
       - uses: actions/upload-artifact@v2
         name: Upload repaired wheels as artifact
         with:
-          name: wheels-{{ matrix.os }}
+          name: wheels-${{ matrix.os }}
           path: ./wheelhouse/*.whl
