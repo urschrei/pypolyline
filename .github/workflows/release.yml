@@ -1,0 +1,26 @@
+name: release wheels
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  download_artifacts:
+    name: Download artifacts for ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-20.04, macOS-10.15]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: actions/download-artifact@v2
+      with:
+        path: artifacts
+        
+    - name: Display structure of downloaded files
+      run: ls -R
+      working-directory: artifacts
