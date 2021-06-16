@@ -104,18 +104,9 @@ jobs:
         name: wheels-${{ matrix.os }}
         path: ./
 
-    - name: Create release
-      uses: actions/create-release@v1
-      id: create_release
-      with:
-        draft: false
-        prerelease: false
-        release_name: ${{ github.ref }} Release
-        tag_name: ${{ github.ref }}
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-    - name: Upload to release
+    - name: Create release and upload wheels
       uses: ncipollo/release-action@v1
       with:
+        allowUpdates: true
         artifacts: "*.whl"
         token: ${{ secrets.GITHUB_TOKEN }}
