@@ -115,8 +115,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ github.token }}
     - name: Upload to release
-    - uses: actions/checkout@v1
-    - uses: ncipollo/release-action@v1
+      uses: actions/checkout@v1
+      uses: ncipollo/release-action@v1
       with:
         artifacts: "*.whl"
         token: ${{ secrets.GITHUB_TOKEN }}
