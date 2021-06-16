@@ -46,7 +46,7 @@ from ctypes import (
 import numpy as np
 
 __author__ = u"Stephan Hügel"
-__version__ = "0.2.67"
+__version__ = "0.2.68"
 
 file_path = os.path.dirname(__file__)
 

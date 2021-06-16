@@ -111,7 +111,7 @@ jobs:
       run: echo ${{ steps.download.outputs.download-path }}
 
     - name: 'List downloaded files'
-      run: ls ${{ steps.download.outputs.download-path }}/**/*.{whl,so,dylib,lib,dll}
+      run: ls ${{ steps.download.outputs.download-path }}/**/*.*
 
     - name: Create release and upload wheels
       uses: ncipollo/release-action@v1
