@@ -117,5 +117,5 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         allowUpdates: true
-        artifacts: "${{ steps.download.outputs.download-path }}/**/*.*"
+        artifacts: "${{ steps.download.outputs.download-path }}/**/*.{whl,so,dylib,lib,dll}"
         token: ${{ secrets.GITHUB_TOKEN }}
