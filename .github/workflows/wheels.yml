@@ -86,9 +86,9 @@ jobs:
           name: wheels-${{ matrix.os }}
           path: ./wheelhouse/*.whl
 
-  download_artifacts:
+  release_artifacts:
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-    name: Download artifacts for ${{ matrix.os }}
+    name: Release repaired and tested wheels for ${{ matrix.os }}
     needs: build_wheels
     runs-on: ${{ matrix.os }}
     strategy:
