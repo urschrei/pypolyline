@@ -80,7 +80,7 @@ extensions = Extension("pypolyline.cutil",
 )
 
 if has_cython:
-    extensions = cythonize([extensions,])
+    extensions = cythonize([extensions,], compiler_directives={'language_level' : "3"})
 else:
     extensions = [extensions,]
 
@@ -101,10 +101,10 @@ setup(
     keywords=['Geo', 'Polyline'],
     classifiers=[
         'Programming Language :: Python',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'Intended Audience :: Science/Research',
