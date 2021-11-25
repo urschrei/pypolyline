@@ -65,7 +65,7 @@ class PolylineTests(unittest.TestCase):
             decode_polyline(self.bad_polyline, 5)
 
     def testLongCoords(self):
-        """ Test that round-tripping is OK.
+        """Test that round-tripping is OK.
         See https://github.com/urschrei/polyline-ffi/issues/1
 
         """
@@ -89,7 +89,10 @@ class PolylineTests(unittest.TestCase):
             [13.38986, 52.49746],
             [13.39063, 52.49739],
             [13.39139, 52.49737],
-            [13.39203, 52.4974,],
+            [
+                13.39203,
+                52.4974,
+            ],
             [13.39278, 52.49742],
             [13.39486, 52.49761],
             [13.3956, 52.49781],
@@ -103,7 +106,10 @@ class PolylineTests(unittest.TestCase):
             [13.39448, 52.50141],
             [13.39448, 52.50165],
             [13.39451, 52.50186],
-            [13.39463, 52.5022,],
+            [
+                13.39463,
+                52.5022,
+            ],
             [13.39478, 52.50246],
             [13.39508, 52.50283],
             [13.39543, 52.50319],
@@ -114,7 +120,10 @@ class PolylineTests(unittest.TestCase):
             [13.39757, 52.50616],
             [13.39775, 52.50635],
             [13.39829, 52.50708],
-            [13.39842, 52.5073,],
+            [
+                13.39842,
+                52.5073,
+            ],
             [13.39859, 52.50754],
             [13.3991, 52.50819],
             [13.40001, 52.5095],
@@ -163,10 +172,12 @@ class PolylineTests(unittest.TestCase):
             decoded = decode_polyline(encoded, 5)
             # is round-tripping OK
             self.assertEqual(
-                decoded, coords,
+                decoded,
+                coords,
             )
             self.assertEqual(
-                cdecoded, coords,
+                cdecoded,
+                coords,
             )
             # does encoded string match Google's output?
             self.assertEqual(encoded, s)
