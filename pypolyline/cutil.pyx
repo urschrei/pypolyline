@@ -34,7 +34,8 @@ __author__ = u"Stephan Hügel"
 
 import numpy as np
 from pypolyline_p cimport (
-    Array,
+    ExternalArray,
+    InternalArray,
     decode_polyline_ffi,
     encode_coordinates_ffi,
     drop_float_array,
@@ -52,7 +53,7 @@ def encode_coordinates(coords, int precision):
 
     """
     cdef double[:,::1] ncoords = np.array(coords, dtype=np.float64)
-    cdef Array coords_ffi
+    cdef ExternalArray coords_ffi
     coords_ffi.data = <void*>&ncoords[0, 0]
     coords_ffi.len = ncoords.shape[0]
     cdef char* result = encode_coordinates_ffi(coords_ffi, precision)
@@ -71,7 +72,7 @@ def decode_polyline(bytes polyline, int precision):
 
     """
     cdef char* to_send = polyline
-    cdef Array result = decode_polyline_ffi(to_send, precision)
+    cdef InternalArray result = decode_polyline_ffi(to_send, precision)
     cdef double* incoming_ptr = <double*>(result.data)
     cdef double[:, ::1] view = <double[:result.len,:2:1]>incoming_ptr
     cdef coords = np.copy(view).tolist()
