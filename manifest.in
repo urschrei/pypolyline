@@ -3,7 +3,8 @@ include pypolyline/*.pyx
 include pypolyline/*.c
 include pypolyline/*.h
 include pypolyline/*.pxd
-include pypolyline/*.so_
+include pypolyline/*.so
+include pypolyline/*.dylib
 include license.txt
 include README.md
 include README.rst
