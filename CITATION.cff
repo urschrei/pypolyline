@@ -1,0 +1,18 @@
+cff-version: 1.1.0
+message: "If you use this software, please cite it using these metadata."
+abstract: "Pypolyline: a Python library for Google Polyline encoding and decoding"
+authors:
+  -
+    family-names: "Hügel"
+    given-names: Stephan
+    orcid: "https://orcid.org/0000-0003-4379-2450"
+title: "Pypolyline"
+date-released: 2021-12-12
+doi: "10.5281/zenodo.5774925"
+keywords:
+  - geo
+  - gis
+  - polyline
+license: MIT
+repository-code: "https://github.com/urschrei/simplification"
+version: "0.2.72"
