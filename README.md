@@ -59,3 +59,22 @@ On a 1.8 GHz Intel Core i7, The pure-Python test runs in ~21 s, the C++ (`cgpoly
 
 ## License
 [MIT](license.txt)
+
+## Citing `Pypolyline`
+If Pypolyline has been significant in your research, and you would like to acknowledge the project in your academic publication, we suggest citing it as follows (example in APA style, 7th edition):
+
+> Hügel, S. (2021). Pypolyline (Version X.Y.Z) [Computer software]. https://doi.org/10.5281/zenodo.5774925
+
+In Bibtex format:
+
+
+    @software{Hugel_Pypolyline_2021,
+    author = {Hügel, Stephan},
+    doi = {10.5281/zenodo.5774925},
+    license = {MIT},
+    month = {12},
+    title = {{Pypolyline}},
+    url = {https://github.com/urschrei/simplification},
+    version = {X.Y.Z},
+    year = {2021}
+    }
