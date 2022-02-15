@@ -14,7 +14,7 @@ Please use a recent (>= 8.1.2) version of `pip`.
 
 ### Supported Platforms
 - Linux (`manylinux1`-compatible)
-- OS X
+- macOS
 - Windows 32-bit / 64-bit
 
 ## Usage
