@@ -46,7 +46,7 @@ from ctypes import (
 import numpy as np
 
 __author__ = u"Stephan Hügel"
-__version__ = "0.2.72"
+__version__ = "0.2.73"
 
 file_path = os.path.dirname(__file__)
 
@@ -96,7 +96,7 @@ class _FFIArray(Structure):
 
     @classmethod
     def from_param(cls, seq):
-        """  Allow implicit conversions """
+        """Allow implicit conversions"""
         return seq if isinstance(seq, cls) else cls(seq)
 
     def __init__(self, seq, data_type=c_double):
@@ -107,19 +107,19 @@ class _FFIArray(Structure):
 
 
 class _CoordResult(Structure):
-    """ Container for returned FFI coordinate data """
+    """Container for returned FFI coordinate data"""
 
     _fields_ = [("coords", _FFIArray)]
 
 
 class _PolylineResult(Structure):
-    """ Container for returned FFI Polyline data """
+    """Container for returned FFI Polyline data"""
 
     _fields_ = [("line", c_void_p)]
 
 
 def _void_array_to_nested_list(res, _func, _args):
-    """ Dereference the FFI result to a list of coordinates """
+    """Dereference the FFI result to a list of coordinates"""
     try:
         shape = res.coords.len, 2
         ptr = cast(res.coords.data, POINTER(c_double))
@@ -132,7 +132,7 @@ def _void_array_to_nested_list(res, _func, _args):
 
 
 def _void_array_to_string(res, _func, _args):
-    """ Dereference the FFI result to a utf8 polyline """
+    """Dereference the FFI result to a utf8 polyline"""
     try:
         result = cast(res.line, c_char_p)
         polyline = bytes(result.value)

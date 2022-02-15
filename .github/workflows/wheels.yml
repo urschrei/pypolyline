@@ -26,7 +26,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        include:
+        - os: ubuntu-latest
+          pybuilds: cp3{7,8,9,10}-manylinux_x86_64
+          arch: x86_64
+          id: linux
+        - os: macos-latest
+          pybuilds: cp3{7,8,9,10}-macosx_x86_64
+          arch: x86_64
+          id: macos_x86
+        - os: macos-latest
+          pybuilds: cp3{8,9,10}-macosx_arm64
+          arch: arm64
+          id: macos_arm64
 
     steps:
       - uses: actions/checkout@v2
@@ -71,8 +83,8 @@ jobs:
           CIBW_BEFORE_BUILD: pip install numpy cython
           CIBW_TEST_REQUIRES: setuptools pytest numpy cython
           CIBW_TEST_COMMAND: 'pytest {package}'
-          CIBW_BUILD: cp3{7,8,9,10}-macosx_x86_64 cp3{7,8,9,10}-manylinux_x86_64 cp3{8,9,10}-macosx_arm64
-          CIBW_ARCHS_MACOS: x86_64 arm64
+          CIBW_BUILD: ${{ matrix.pybuilds }}
+          CIBW_ARCHS_MACOS: ${{ matrix.arch }}
           CIBW_TEST_SKIP: "*:arm64"
 
       - uses: actions/upload-artifact@v2
