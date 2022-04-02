@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
 release.py
 Retrieve latest compressed wheels from GitHub

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 util.py
 
@@ -45,7 +44,7 @@ from ctypes import (
 )
 import numpy as np
 
-__author__ = u"Stephan Hügel"
+__author__ = "Stephan Hügel"
 __version__ = "0.2.75"
 
 file_path = os.path.dirname(__file__)
@@ -55,14 +54,9 @@ extension = {"darwin": ".dylib", "win32": ".dll"}.get(platform, ".so")
 fpath = {"darwin": "", "win32": ""}.get(platform, os.path.join(file_path, ".libs"))
 
 # Python 3 check
-if version_info > (3, 0):
-    from subprocess import getoutput as spop
+from subprocess import getoutput as spop
 
-    py3 = True
-else:
-    from subprocess import check_output as spop
-
-    py3 = False
+py3 = True
 
 try:
     lib = cdll.LoadLibrary(os.path.join(file_path, prefix + "polyline_ffi" + extension))
@@ -77,12 +71,12 @@ except OSError:
 
 class EncodingError(Exception):
     def __init__(self, message):
-        super(EncodingError, self).__init__(message)
+        super().__init__(message)
 
 
 class DecodingError(Exception):
     def __init__(self, message):
-        super(DecodingError, self).__init__(message)
+        super().__init__(message)
 
 
 class _FFIArray(Structure):
