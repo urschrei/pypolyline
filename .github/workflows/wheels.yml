@@ -75,8 +75,7 @@ jobs:
 
       - name: Extract downloaded lib
         run:   |
-               echo ${{ steps.get-rust-lib.outputs.location }}
-               tar -xvf ${{ steps.get-rust-lib.outputs.location }} -C ${{ env.wheelname }}
+               tar -xvf "rustlib/${{ env.filename }}" -C ${{ env.wheelname }}
                mkdir wheelhouse
         shell: bash
 
