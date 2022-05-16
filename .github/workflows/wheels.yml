@@ -1,6 +1,7 @@
 name: Build and test wheels, release on new tag
 env:
-  rustlib: polyline-ffi
+  librepo: polyline-ffi
+  rustlib: polylineffi
   wheelname: pypolyline
 
 on: [push, pull_request]
@@ -15,7 +16,7 @@ jobs:
       - id: latest-tag
         uses: oprypin/find-latest-tag@v1
         with:
-          repository: urschrei/${{ env.rustlib }}  # The repository to scan.
+          repository: urschrei/${{ env.librepo }}  # The repository to scan.
           releases-only: true  # We know that all relevant tags have a GitHub release for them.
       - run: echo "Latest lib tag ${{ steps.latest-tag.outputs.tag }}"
 
@@ -67,7 +68,7 @@ jobs:
         name: Download latest Rust lib release
         with:
           token: ${{ secrets.POLYLINE_RETRIEVAL }}
-          repository: urschrei/${{ env.rustlib }}
+          repository: urschrei/${{ env.librepo }}
           tag: ${{ needs.get_latest_lib_tag.outputs.tag }}
           fileName: ${{ env.filename }}
           out-file-path: rustlib
