@@ -18,7 +18,7 @@ if "linux" in sys.platform:
     # from http://stackoverflow.com/a/10252190/416626
     # the $ORIGIN trick is not perfect, though
     ldirs = ["-Wl,-rpath", "-Wl,$ORIGIN"]
-    platform_lib = "libpolyline_ffi.so"
+    platform_lib = "libpolylineffi.so"
 if sys.platform == "darwin":
     # You must compile your binary with rpath support for this to work
     # RUSTFLAGS="-C rpath" cargo build --release
@@ -26,13 +26,13 @@ if sys.platform == "darwin":
     ldirs = ["-Wl,-rpath", "-Wl,@loader_path/"]
 if sys.platform == "win32":
     ddirs = ["pypolyline/header.h"]
-    platform_lib = "polyline_ffi.dll"
+    platform_lib = "polylineffi.dll"
 
 
 extensions = Extension(
     "pypolyline.cutil",
     sources=["pypolyline/cutil.pyx"],
-    libraries=["polyline_ffi"],
+    libraries=["polylineffi"],
     depends=ddirs,
     language="c",
     include_dirs=["pypolyline", numpy.get_include()],
