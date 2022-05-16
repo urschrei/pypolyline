@@ -45,7 +45,7 @@ from ctypes import (
 import numpy as np
 
 __author__ = "Stephan Hügel"
-__version__ = "0.2.76"
+__version__ = "0.2.77"
 
 file_path = os.path.dirname(__file__)
 
@@ -59,7 +59,7 @@ from subprocess import getoutput as spop
 py3 = True
 
 try:
-    lib = cdll.LoadLibrary(os.path.join(file_path, prefix + "polyline_ffi" + extension))
+    lib = cdll.LoadLibrary(os.path.join(file_path, prefix + "polylineffi" + extension))
 except OSError:
     # the Rust lib's been grafted by manylinux1
     if not py3:
