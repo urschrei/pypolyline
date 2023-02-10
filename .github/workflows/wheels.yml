@@ -29,24 +29,24 @@ jobs:
       matrix:
         include:
         - os: ubuntu-latest
-          pybuilds: cp3{7,8,9,10}-manylinux_x86_64
+          pybuilds: cp3{7,8,9,10,11}-manylinux_x86_64
           arch: x86_64
           id: linux
         - os: macos-latest
-          pybuilds: cp3{7,8,9,10}-macosx_x86_64
+          pybuilds: cp3{7,8,9,10,11}-macosx_x86_64
           arch: x86_64
           id: macos_x86
         - os: macos-latest
-          pybuilds: cp3{8,9,10}-macosx_arm64
+          pybuilds: cp3{8,9,10,11}-macosx_arm64
           arch: arm64
           id: macos_arm64
         - os: windows-latest
-          pybuilds: cp3{7,8,9,10}-win_amd64
+          pybuilds: cp3{7,8,9,10,11}-win_amd64
           arch: x86_64
           id: windows
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         name: Check out repo
 
       - id: set-filename
@@ -90,7 +90,7 @@ jobs:
           CIBW_ARCHS_MACOS: ${{ matrix.arch }}
           CIBW_TEST_SKIP: "*:arm64"
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         name: Upload repaired wheels as artifact
         with:
           name: wheels-${{ matrix.os }}
@@ -108,11 +108,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Download compressed artifacts
       id: download
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         path: ./artifacts
 

@@ -44,8 +44,11 @@ from ctypes import (
 )
 import numpy as np
 
+# Python 3 check
+from subprocess import getoutput as spop
+
 __author__ = "Stephan Hügel"
-__version__ = "0.2.77"
+__version__ = "0.2.78"
 
 file_path = os.path.dirname(__file__)
 
@@ -53,8 +56,6 @@ prefix = {"win32": ""}.get(platform, "lib")
 extension = {"darwin": ".dylib", "win32": ".dll"}.get(platform, ".so")
 fpath = {"darwin": "", "win32": ""}.get(platform, os.path.join(file_path, ".libs"))
 
-# Python 3 check
-from subprocess import getoutput as spop
 
 py3 = True
 
