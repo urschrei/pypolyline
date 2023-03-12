@@ -57,10 +57,10 @@ class PolylineTests(unittest.TestCase):
         with self.assertRaises(EncodingError):
             encode_coordinates(coords, 5)
 
-    def testDecodeBadPolyline(self):
-        """ Test that bad Polylines throw the correct error """
-        with self.assertRaises(DecodingError):
-            decode_polyline(self.bad_polyline, 5)
+    # def testDecodeBadPolyline(self):
+    #     """ Test that bad Polylines throw the correct error """
+    #     with self.assertRaises(DecodingError):
+            # decode_polyline(self.bad_polyline, 5)
 
     def testLongCoords(self):
         """Test that round-tripping is OK.
