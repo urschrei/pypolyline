@@ -20,13 +20,13 @@ print("Calibration complete, running benchmarks\n")
 bmarks = [
     ('benches/benchmark_rust.py', 'benches/output_stats_rust', 'Rust + Cython'),
     ('benches/benchmark_python.py', 'benches/output_stats_python', 'Pure Python'),
-    ('benches/benchmark_cgg.py', 'benches/output_stats_cgg', 'C++')
 ]
 
 results = []
 for benchmark in bmarks:
-    cProfile.run(open(benchmark[0], 'rb'), benchmark[1])
-    results.append(pstats.Stats(benchmark[1]))
+    with open(benchmark[0], 'rb') as f:
+        cProfile.run(f.read(), benchmark[1])
+        results.append(pstats.Stats(benchmark[1]))
 
 for i, benchmark in enumerate(bmarks):
     print("%s Benchmark\n" % benchmark[2])

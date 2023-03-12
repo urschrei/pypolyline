@@ -8,10 +8,10 @@ S = 51.28676016315085
 W = -0.5103750689005356
 
 num_coords = 1000
-coords = zip(
+coords = list(zip(
     np.random.uniform(S, N, [num_coords]),
     np.random.uniform(W, E, [num_coords])
-    ) 
+    ))
 
 if __name__ == "__main__":
     for x in range(500):
