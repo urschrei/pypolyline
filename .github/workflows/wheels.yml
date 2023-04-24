@@ -136,6 +136,11 @@ jobs:
     name: Release repaired and tested wheels
     needs: build_wheels
     runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      # IMPORTANT: this permission is mandatory for trusted publishing
+      id-token: write
+      contents: write
 
     steps:
     - uses: actions/checkout@v3
@@ -154,12 +159,10 @@ jobs:
       with:
         allowUpdates: true
         artifacts: "${{ steps.download.outputs.download-path }}/**/*.whl,${{ steps.download.outputs.download-path }}/**/*.gz,${{ steps.download.outputs.download-path }}/**/*.so,${{ steps.download.outputs.download-path }}/**/*.dylib,${{ steps.download.outputs.download-path }}/**/*.lib,${{ steps.download.outputs.download-path }}/**/*.dll"
-
         token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: PyPI upload
+    - name: PyPI Publish
       uses: pypa/gh-action-pypi-publish@v1.8.5
       with:
-        password: ${{ secrets.pypi_password }}
         packages-dir: ${{ steps.download.outputs.download-path }}/**/
 
