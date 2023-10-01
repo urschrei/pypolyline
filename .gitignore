@@ -3,7 +3,7 @@ cutil.c
 *.eggs
 test/output*
 _version.py
-header.h
+src/pypolyline/header.h
 libpolylineffi.so
 rustlib/*
 *.so
