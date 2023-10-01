@@ -28,7 +28,7 @@ classifiers = [
     ]
 [project.urls]
 Repository = "https://github.com/urschrei/pypolyline"
-Tracker = "https://github.com/urschrei/pypolyling/issues"
+Tracker = "https://github.com/urschrei/pypolyline/issues"
 
 [project.optional-dependencies]
 test = ["pytest >= 7.4.2"]
