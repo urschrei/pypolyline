@@ -22,7 +22,7 @@ if "linux" in sys.platform:
 if sys.platform == "darwin":
     # You must compile your binary with rpath support for this to work
     # RUSTFLAGS="-C rpath" cargo build --release
-    platform_lib = "libpolyline_ffi.dylib"
+    platform_lib = "libpolylineffi.dylib"
     ldirs = ["-Wl,-rpath", "-Wl,@loader_path/"]
 if sys.platform == "win32":
     ddirs = ["src/pypolyline/header.h"]
