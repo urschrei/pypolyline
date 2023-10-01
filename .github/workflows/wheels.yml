@@ -93,6 +93,7 @@ jobs:
         run:   |
                tar -xvf "rustlib/${{ env.filename }}" -C src/${{ env.wheelname }}
                mkdir wheelhouse
+               git status
         shell: bash
 
       - name: Build and Test Wheels
