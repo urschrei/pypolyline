@@ -1,9 +1,59 @@
-[build-system]
-requires = [
-    "setuptools >= 40.6.0",
+[project]
+name = "pypolyline"
+dynamic = ["version", "readme"]
+description = "Fast Google Polyline encoding and decoding using Rust FFI"
+requires-python = ">=3.8"
+dependencies = [
     "wheel >= 0.29.0",
     "cython >= 0.29.0",
     "numpy >= 1.11.0",
-    "setuptools_scm[toml] >= 4, <6",
 ]
+authors = [{ name = "Stephan Hügel", email = "urschrei@gmail.com" }]
+license = {file = "license.txt"}
+keywords = ["Geo", "Polyline"]
+classifiers = [
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Education",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Scientific/Engineering :: GIS"
+    ]
+[project.urls]
+Repository = "https://github.com/urschrei/pypolyline"
+Tracker = "https://github.com/urschrei/simplification/pypolyline"
+
+[project.optional-dependencies]
+test = ["pytest >= 7.4.2"]
+
+[tool.setuptools.dynamic]
+readme = {file = "README.md", content-type = "text/markdown"}
+
+[build-system]
 build-backend = "setuptools.build_meta"
+requires = [
+    "setuptools >= 45",
+    "setuptools-scm[toml] >= 6.2",
+    "numpy >= 1.11.0",
+    "cython >= 0.29.0"
+]
+
+[tool.pytest.ini_options]
+minversion = "6.2.2"
+addopts = [
+    "--import-mode=importlib",
+]
+testpaths = [
+    "tests",
+]
+
+[tool.setuptools_scm]
+write_to = "src/_version.py"
+

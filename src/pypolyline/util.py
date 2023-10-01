@@ -48,7 +48,6 @@ import numpy as np
 from subprocess import getoutput as spop
 
 __author__ = "Stephan Hügel"
-__version__ = "0.3.2"
 
 file_path = os.path.dirname(__file__)
 
