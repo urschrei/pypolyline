@@ -4,8 +4,6 @@ dynamic = ["version", "readme"]
 description = "Fast Google Polyline encoding and decoding using Rust FFI"
 requires-python = ">=3.8"
 dependencies = [
-    "wheel >= 0.29.0",
-    "cython >= 0.29.0",
     "numpy >= 1.11.0",
 ]
 authors = [{ name = "Stephan Hügel", email = "urschrei@gmail.com" }]
@@ -17,6 +15,7 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
     "Intended Audience :: Science/Research",
@@ -42,7 +41,8 @@ requires = [
     "setuptools >= 45",
     "setuptools-scm[toml] >= 6.2",
     "numpy >= 1.11.0",
-    "cython >= 0.29.0"
+    "cython >= 0.29.0",
+    "wheel >= 0.29.0",
 ]
 
 [tool.pytest.ini_options]
