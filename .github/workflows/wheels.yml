@@ -80,7 +80,7 @@ jobs:
         shell: bash
 
       - id: get-rust-lib
-        uses: robinraju/release-downloader@v1.7
+        uses: robinraju/release-downloader@v1.10
         name: Download latest Rust lib release
         with:
           token: ${{ secrets.POLYLINE_RETRIEVAL }}
@@ -108,7 +108,7 @@ jobs:
           CIBW_ARCHS_LINUX: "auto aarch64"
           CIBW_TEST_SKIP: "*:arm64"
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         name: Upload repaired wheels as artifact
         with:
           name: wheels-${{ matrix.os }}
@@ -131,7 +131,7 @@ jobs:
     - name: Build SDist
       run: pipx run build --sdist
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         path: dist/*.tar.gz
 
