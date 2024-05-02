@@ -1,13 +1,17 @@
+import math
 import unittest
-from pypolyline.util import (
-    encode_coordinates,
-    decode_polyline,
-    EncodingError,
-    DecodingError,
+
+from pypolyline.cutil import (
+    decode_polyline as cdecode_polyline,
 )
 from pypolyline.cutil import (
     encode_coordinates as cencode_coordinates,
-    decode_polyline as cdecode_polyline,
+)
+from pypolyline.util import (
+    DecodingError,
+    EncodingError,
+    decode_polyline,
+    encode_coordinates,
 )
 
 
@@ -19,11 +23,11 @@ class PolylineTests(unittest.TestCase):
         self.coords = [[-120.2, 38.5], [-120.95, 40.7], [-126.453, 43.252]]
         try:
             self.polyline = bytes("_p~iF~ps|U_ulLnnqC_mqNvxq`@", "utf-8")
-            self.bad_polyline = bytes("ynh`IcftoCyq@Ne@ncB💀ds@EEycB", "utf-8")
+            self.bad_polyline = bytes("ugh_ugh_ugh", "utf-8")
         except TypeError:
             # python 2
             self.polyline = "_p~iF~ps|U_ulLnnqC_mqNvxq`@"
-            self.bad_polyline = "ynh`IcftoCyq@Ne@ncB💀ds@EEycB"
+            self.bad_polyline = "ugh_ugh_ugh"
 
     def testDecodePolyline(self):
         """Test that Polylines can be decoded"""
@@ -57,10 +61,10 @@ class PolylineTests(unittest.TestCase):
         with self.assertRaises(EncodingError):
             encode_coordinates(coords, 5)
 
-    # def testDecodeBadPolyline(self):
-    #     """ Test that bad Polylines throw the correct error """
-    #     with self.assertRaises(DecodingError):
-    # decode_polyline(self.bad_polyline, 5)
+    def testDecodeBadPolyline(self):
+        """Test that bad Polylines throw the correct error"""
+        res = cdecode_polyline(self.bad_polyline, 6)
+        self.assertTrue(math.isnan(res[0][0]))
 
     def testLongCoords(self):
         """Test that round-tripping is OK.
