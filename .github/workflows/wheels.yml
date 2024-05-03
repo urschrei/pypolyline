@@ -32,10 +32,10 @@ jobs:
           pybuilds: cp3{8,9,10,11,12}-manylinux_x86_64
           arch: x86_64
           id: linux
-        - os: ubuntu-latest
-          pybuilds: cp3{8,9,10,11,12}-manylinux_aarch64
-          arch: aarch64
-          id: linux_arm64
+        # - os: ubuntu-latest
+        #   pybuilds: cp3{8,9,10,11,12}-manylinux_aarch64
+        #   arch: aarch64
+        #   id: linux_arm64
         - os: macos-latest
           pybuilds: cp3{8,9,10,11,12}-macosx_x86_64
           arch: x86_64
@@ -111,7 +111,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         name: Upload repaired wheels as artifact
         with:
-          name: wheels-${{ matrix.os }}-${{ matrix.runs-on }}-${{ matrix.pybuilds }}-${{ matrix.arch }}
+          name: wheels-${{ matrix.os }}-${{ matrix.arch }}
           path: |
             ./wheelhouse/*.whl
             ./wheelhouse/*.so
@@ -159,11 +159,14 @@ jobs:
         path: ./artifacts
         merge-multiple: true
 
+    - name: Display structure of downloaded files
+      run: ls -R ./artifacts
+
     - name: Create release and upload wheels
       uses: ncipollo/release-action@v1
       with:
         allowUpdates: true
-        artifacts: "${{ steps.download.outputs.download-path }}/**/*.whl,${{ steps.download.outputs.download-path }}/**/*.gz,${{ steps.download.outputs.download-path }}/**/*.so,${{ steps.download.outputs.download-path }}/**/*.dylib,${{ steps.download.outputs.download-path }}/**/*.lib,${{ steps.download.outputs.download-path }}/**/*.dll"
+        artifacts: "${{ steps.download.outputs.download-path }}/*.whl,${{ steps.download.outputs.download-path }}/*.gz,${{ steps.download.outputs.download-path }}/*.so,${{ steps.download.outputs.download-path }}/*.dylib,${{ steps.download.outputs.download-path }}/*.lib,${{ steps.download.outputs.download-path }}/*.dll"
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: PyPI Publish
