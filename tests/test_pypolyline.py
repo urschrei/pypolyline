@@ -1,17 +1,11 @@
-import math
 import unittest
 
+import pytest
 from pypolyline.cutil import (
     decode_polyline as cdecode_polyline,
 )
 from pypolyline.cutil import (
     encode_coordinates as cencode_coordinates,
-)
-from pypolyline.util import (
-    DecodingError,
-    EncodingError,
-    decode_polyline,
-    encode_coordinates,
 )
 
 
@@ -24,23 +18,15 @@ class PolylineTests(unittest.TestCase):
         try:
             self.polyline = bytes("_p~iF~ps|U_ulLnnqC_mqNvxq`@", "utf-8")
             self.bad_polyline = bytes("ugh_ugh_ugh", "utf-8")
+            self.bad_coordinates = [
+                [-120.2, 38.5],
+                [-120.95, 40.7],
+                [-126.453, 430.252],
+            ]
         except TypeError:
             # python 2
             self.polyline = "_p~iF~ps|U_ulLnnqC_mqNvxq`@"
             self.bad_polyline = "ugh_ugh_ugh"
-
-    def testDecodePolyline(self):
-        """Test that Polylines can be decoded"""
-        expected = self.coords
-        result = decode_polyline(self.polyline, 5)
-        for _ in range(100):
-            self.assertEqual(result, expected)
-
-    def testEncodeCoordinates(self):
-        """Test that coordinates can be encoded"""
-        expected = self.polyline
-        result = encode_coordinates(self.coords, 5)
-        self.assertEqual(result, expected)
 
     def testCDecodePolyline(self):
         """Test that Polylines can be decoded (Cython)"""
@@ -55,16 +41,24 @@ class PolylineTests(unittest.TestCase):
         result = cencode_coordinates(self.coords, 5)
         self.assertEqual(result, expected)
 
-    def testBadCoordinates(self):
-        """Test that bad coordinates throw the correct error"""
-        coords = [[110.0, 95.0], [1.0, 2.0]]
-        with self.assertRaises(EncodingError):
-            encode_coordinates(coords, 5)
-
     def testDecodeBadPolyline(self):
         """Test that bad Polylines throw the correct error"""
-        res = cdecode_polyline(self.bad_polyline, 6)
-        self.assertTrue(math.isnan(res[0][0]))
+        with pytest.raises(RuntimeError) as exc_info:
+            cdecode_polyline(self.bad_polyline, 6)
+        assert str(exc_info.value) == "Polyline could not be decoded. Is it valid?"
+
+    def testEncodeBadCoordinates(self):
+        """Test that bad Polylines throw the correct error"""
+        with pytest.raises(RuntimeError) as exc_info:
+            cencode_coordinates(self.bad_coordinates, 6)
+        assert str(exc_info.value) == "The input coordinates could not be encoded"
+
+    # def testEncodeBadCoordinatesB(self):
+    #     """Test that bad Polylines throw the correct error"""
+    #     # with pytest.raises(RuntimeError) as exc_info:
+    #     res = cencode_coordinates(self.bad_coordinates, 6)
+    #     self.assertEqual(res, "ug")
+    #     # assert str(exc_info.value) == "The input coordinates could not be encoded"
 
     def testLongCoords(self):
         """Test that round-tripping is OK.
@@ -168,10 +162,10 @@ class PolylineTests(unittest.TestCase):
         for _ in range(10000):
             # encode using ctypes and cython
             cencoded = cencode_coordinates(coords, 5)
-            encoded = encode_coordinates(coords, 5)
+            encoded = cencode_coordinates(coords, 5)
             # decode using ctypes and cython
             cdecoded = cdecode_polyline(cencoded, 5)
-            decoded = decode_polyline(encoded, 5)
+            decoded = cdecode_polyline(encoded, 5)
             # is round-tripping OK
             self.assertEqual(
                 decoded,

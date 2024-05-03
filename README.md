@@ -38,17 +38,9 @@ polyline = encode_coordinates(coords, 5)
 decoded_coords = decode_polyline(polyline, 5)
 ```
 
-## Cython Module 🔥
-If you're comfortable with a lack of built-in exceptions, you should use the compiled Cython version of the functions, giving a 3x speedup over the `ctypes` functions:
-```python
-from pypolyline.cutil import encode_coordinates, decode_polyline
-```
-- Longitude errors will return strings beginning with `Longitude error:`
-- Latitude errors will return strings beginning with `Latitude error:`
-- Polyline errors will return `[[nan, nan]]`
+## Error Handling
+Failure to encode coordinates, or to decode a supplied Polyline, will raise a `RuntimeError` which can be caught.
 
-Otherwise, import from `util` instead, for a slower, `ctypes`-based interface. Attempts to decode an invalid Polyline will throw `util.EncodingError`  
-Attempts to encode invalid coordinates will throw `util.DecodingError`
 
 ## How it Works
 FFI and a [Rust binary](https://github.com/urschrei/polyline-ffi)

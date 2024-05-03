@@ -59,6 +59,8 @@ def encode_coordinates(coords, int precision):
     cdef char* result = encode_coordinates_ffi(coords_ffi, precision)
     cdef bytes polyline = result
     drop_cstring(result)
+    if np.char.startswith(polyline, b"Latitude") or np.char.startswith(polyline, b"Longitude"):
+        raise RuntimeError("The input coordinates could not be encoded")
     return polyline
 
 def decode_polyline(bytes polyline, int precision):
@@ -77,4 +79,6 @@ def decode_polyline(bytes polyline, int precision):
     cdef double[:, ::1] view = <double[:result.len,:2:1]>incoming_ptr
     cdef coords = np.copy(view).tolist()
     drop_float_array(result)
+    if np.isnan(coords[0][0]):
+        raise RuntimeError("Polyline could not be decoded. Is it valid?")
     return coords
