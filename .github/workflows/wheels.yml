@@ -159,9 +159,6 @@ jobs:
         path: ./artifacts
         merge-multiple: true
 
-    - name: 'List downloaded files'
-      run: ls ${{ steps.download.outputs.download-path }}/**/*.*
-
     - name: Create release and upload wheels
       uses: ncipollo/release-action@v1
       with:
