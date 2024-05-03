@@ -32,10 +32,10 @@ jobs:
           pybuilds: cp3{8,9,10,11,12}-manylinux_x86_64
           arch: x86_64
           id: linux
-        # - os: ubuntu-latest
-        #   pybuilds: cp3{8,9,10,11,12}-manylinux_aarch64
-        #   arch: aarch64
-        #   id: linux_arm64
+        - os: ubuntu-latest
+          pybuilds: cp3{8,9,10,11,12}-manylinux_aarch64
+          arch: aarch64
+          id: linux_arm64
         - os: macos-latest
           pybuilds: cp3{8,9,10,11,12}-macosx_x86_64
           arch: x86_64
@@ -172,5 +172,5 @@ jobs:
     - name: PyPI Publish
       uses: pypa/gh-action-pypi-publish@v1.8.14
       with:
-        packages-dir: ${{ steps.download.outputs.download-path }}/**/
+        packages-dir: ${{ steps.download.outputs.download-path }}
 
