@@ -114,8 +114,8 @@ jobs:
           CIBW_ARCHS_LINUX: "auto aarch64"
           CIBW_TEST_SKIP: "*:arm64"
 
-      - name: Attest Build Provenance
-          id: attest
+      - id: attest
+          name: Attest Build Provenance
           uses: actions/attest-build-provenance@v1
           with:
           subject-path: "./wheelhouse/*.whl"
