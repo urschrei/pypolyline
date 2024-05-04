@@ -1,4 +1,10 @@
 name: Build and test wheels, release on new tag
+
+permissions:
+  id-token: write
+  attestations: write
+  contents: read
+
 env:
   librepo: polyline-ffi
   rustlib: polylineffi
@@ -108,11 +114,18 @@ jobs:
           CIBW_ARCHS_LINUX: "auto aarch64"
           CIBW_TEST_SKIP: "*:arm64"
 
+      - name: Attest Build Provenance
+          id: attest
+          uses: actions/attest-build-provenance@v1
+          with:
+          subject-path: "./wheelhouse/*.whl"
+
       - uses: actions/upload-artifact@v4
         name: Upload repaired wheels as artifact
         with:
-          name: wheels-${{ matrix.os }}-${{ matrix.arch }}
+          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
           path: |
+            ${{ steps.attest.outputs.bundle-path }}
             ./wheelhouse/*.whl
             ./wheelhouse/*.so
             ./wheelhouse/*.dylib
