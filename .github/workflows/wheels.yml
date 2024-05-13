@@ -170,9 +170,11 @@ jobs:
         path: ./artifacts
         merge-multiple: true
 
-    - name: Remove attestation dir
+    - name: Remove attestation dir, copy wheels into main dir, remove subdirs
       run:   |
              rm -rf "${{ steps.download.outputs.download-path }}"/_temp
+             cp "${{ steps.download.outputs.download-path }}"/"${{ env.wheelname }}"/"${{ env.wheelname }}"/wheelhouse/*.whl ${{ steps.download.outputs.download-path }}
+             rm -rf "${{ steps.download.outputs.download-path }}"/"${{ env.wheelname }}"
       shell: bash
 
     - name: Display structure of downloaded files
