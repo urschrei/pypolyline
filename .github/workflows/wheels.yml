@@ -170,6 +170,11 @@ jobs:
         path: ./artifacts
         merge-multiple: true
 
+    - name: Remove attestation dir
+      run:   |
+             rm -rf "${{ steps.download.outputs.download-path }}"/_temp
+      shell: bash
+
     - name: Display structure of downloaded files
       run: ls -R ./artifacts
 
