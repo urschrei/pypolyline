@@ -65,7 +65,7 @@ def encode_coordinates(coords, int precision):
         np.char.startswith(polyline, b"no longitude") or
         np.char.startswith(polyline, b"couldn't")
     ):
-        raise RuntimeError("The input coordinates could not be encoded")
+        raise RuntimeError(polyline)
     return polyline
 
 def decode_polyline(bytes polyline, int precision):

@@ -39,7 +39,7 @@ decoded_coords = decode_polyline(polyline, 5)
 ```
 
 ## Error Handling
-Failure to encode coordinates, or to decode a supplied Polyline, will raise a `RuntimeError` which can be caught.
+Failure to encode coordinates, or to decode a supplied Polyline, will raise a `RuntimeError` containing information about the invalid input.
 
 
 ## How it Works

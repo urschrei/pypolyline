@@ -49,9 +49,8 @@ class PolylineTests(unittest.TestCase):
 
     def testEncodeBadCoordinates(self):
         """Test that bad Polylines throw the correct error"""
-        with pytest.raises(RuntimeError) as exc_info:
+        with pytest.raises(RuntimeError) as _:
             cencode_coordinates(self.bad_coordinates, 6)
-        assert str(exc_info.value) == "The input coordinates could not be encoded"
 
     # def testEncodeBadCoordinatesB(self):
     #     """Test that bad Polylines throw the correct error"""
