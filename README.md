@@ -4,7 +4,6 @@
 
 ## Installation
 `pip install pypolyline`  
-Please use a recent (>= 8.1.2) version of `pip`.
 
 ### Supported Python Versions
 - Python 3.8
@@ -48,7 +47,7 @@ FFI and a [Rust binary](https://github.com/urschrei/polyline-ffi)
 ## Is It Fast
 …Yes.  
 You can verify this by installing the `polyline` package, then running [`benchmarks.py`](benchmarks.py), a calibrated benchmark using `cProfile`.  
-On a 1.8 GHz Intel Core i7, The pure-Python test runs in ~5000 ms and The Rust + Cython benchmark runs in around 300 ms (177 % faster).
+On an M2 MBP, The [pure-Python](https://pypi.org/project/polyline/) test runs in ~2500 ms, the [Flexpolyline](https://pypi.org/project/flexpolyline/) benchmark runs in ~1500 ms and The Rust + Cython benchmark runs in around 80 ms (30 x and 17.5 x faster, respectively).
 
 ## License
 [MIT](license.txt)
