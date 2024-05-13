@@ -59,7 +59,12 @@ def encode_coordinates(coords, int precision):
     cdef char* result = encode_coordinates_ffi(coords_ffi, precision)
     cdef bytes polyline = result
     drop_cstring(result)
-    if np.char.startswith(polyline, b"Latitude") or np.char.startswith(polyline, b"Longitude"):
+    if (
+        np.char.startswith(polyline, b"latitude") or
+        np.char.startswith(polyline, b"longitude") or
+        np.char.startswith(polyline, b"no longitude") or
+        np.char.startswith(polyline, b"couldn't")
+    ):
         raise RuntimeError("The input coordinates could not be encoded")
     return polyline
 
