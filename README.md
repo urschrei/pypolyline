@@ -50,7 +50,7 @@ You can verify this by installing the `polyline` package, then running [`benchma
 On an M2 MBP, The [pure-Python](https://pypi.org/project/polyline/) test runs in ~2500 ms, the [Flexpolyline](https://pypi.org/project/flexpolyline/) benchmark runs in ~1500 ms and The Rust + Cython benchmark runs in around 80 ms (30 x and 17.5 x faster, respectively).
 
 ## License
-[MIT](license.txt)
+[The Blue Oak Model Licence 1.0.0](LICENCE.md)
 
 ## Citing `Pypolyline`
 If Pypolyline has been significant in your research, and you would like to acknowledge the project in your academic publication, we suggest citing it as follows (example in APA style, 7th edition):
