@@ -20,7 +20,7 @@ from pypolyline_p cimport (
 def encode_coordinates(coords, int precision):
     """
     Encode coordinates as a Polyline.
-    Input: a list of lat, lon coordinates, and a precision int (5 for Google, 6 for OSM-derived).
+    Input: a list of lon, lat coordinates, and a precision int (5 for Google, 6 for OSM-derived).
     Output: an encoded Polyline string.
 
     Example: encode_coordinates([[38.5, -120.2], [40.7, -120.95], [43.252, -126.453]], 5)
@@ -47,7 +47,7 @@ def decode_polyline(bytes polyline, int precision):
     """
     Decode an encoded Polyline to coordinates.
     Input: a Polyline string, and a precision int (5 for Google, 6 for OSM-derived).
-    Output: a list of lat, lon coordinates.
+    Output: a list of lon, lat coordinates.
 
     Example: decode_polyline(_p~iF~ps|U_ulLnnqC_mqNvxq`@, 5)
     Result: [[38.5, -120.2], [40.7, -120.95], [43.252, -126.453]]
