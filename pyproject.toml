@@ -2,20 +2,20 @@
 name = "pypolyline"
 dynamic = ["version", "readme"]
 description = "Fast Google Polyline encoding and decoding using Rust FFI"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 dependencies = [
-    "numpy >= 1.11.0",
+    "numpy >= 2.0.0",
 ]
 authors = [{ name = "Stephan Hügel", email = "urschrei@gmail.com" }]
 license = {file = "LICENSE.md"}
 keywords = ["Geo", "Polyline"]
 classifiers = [
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
     "Intended Audience :: Science/Research",
@@ -40,7 +40,7 @@ build-backend = "setuptools.build_meta"
 requires = [
     "setuptools >= 45",
     "setuptools-scm[toml] >= 6.2",
-    "numpy >= 1.11.0",
+    "numpy >= 2.0.0",
     "cython >= 0.29.0",
     "wheel >= 0.29.0",
 ]
