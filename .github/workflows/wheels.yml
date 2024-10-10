@@ -9,6 +9,7 @@ env:
   librepo: polyline-ffi
   rustlib: polylineffi
   wheelname: pypolyline
+  CIBW_BUILD_FRONTEND: build[uv]
 
 on: [push, pull_request]
 
