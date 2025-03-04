@@ -9,7 +9,6 @@ env:
   librepo: polyline-ffi
   rustlib: polylineffi
   wheelname: pypolyline
-  CIBW_BUILD_FRONTEND: build[uv]
 
 on: [push, pull_request]
 
@@ -87,7 +86,7 @@ jobs:
         shell: bash
 
       - id: get-rust-lib
-        uses: robinraju/release-downloader@v1.11
+        uses: robinraju/release-downloader@v1
         name: Download latest Rust lib release
         with:
           token: ${{ secrets.POLYLINE_RETRIEVAL }}
@@ -103,9 +102,13 @@ jobs:
                git status
         shell: bash
 
+      - name: Install cibuildwheel
+        run: python -m pip install cibuildwheel[uv]==2.23.0
+
       - name: Build and Test Wheels
-        uses: pypa/cibuildwheel@v2.23.0
+        run: python -m cibuildwheel --output-dir wheelhouse
         env:
+          CIBW_BUILD_FRONTEND: build[uv]
           CIBW_TEST_REQUIRES: pytest
           CIBW_TEST_COMMAND: 'pytest {package}'
           CIBW_BUILD: ${{ matrix.pybuilds }}
@@ -189,7 +192,7 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: PyPI Publish
-      uses: pypa/gh-action-pypi-publish@v1.12.4
+      uses: pypa/gh-action-pypi-publish@v1
       with:
         packages-dir: ${{ steps.download.outputs.download-path }}
 
