@@ -103,7 +103,7 @@ jobs:
         shell: bash
 
       - name: Install cibuildwheel
-        run: python -m pip install cibuildwheel==2.23.0
+        run: python -m pip install cibuildwheel
 
       - name: Install the latest version of uv
         uses: astral-sh/setup-uv@v5
