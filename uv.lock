@@ -1,4 +1,5 @@
 version = 1
+revision = 1
 requires-python = ">=3.9"
 
 [[package]]
@@ -100,7 +101,6 @@ wheels = [
 
 [[package]]
 name = "pypolyline"
-version = "0.5.3.dev30+g1dbea18.d20241010"
 source = { editable = "." }
 dependencies = [
     { name = "numpy" },
@@ -116,6 +116,7 @@ requires-dist = [
     { name = "numpy", specifier = ">=2.0.0" },
     { name = "pytest", marker = "extra == 'test'", specifier = ">=7.4.2" },
 ]
+provides-extras = ["test"]
 
 [[package]]
 name = "pytest"
