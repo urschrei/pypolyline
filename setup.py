@@ -6,10 +6,10 @@ Created by Stephan Hügel on 2016-07-25
 """
 
 import sys
-from setuptools import setup, Extension
+
 import numpy
 from Cython.Build import cythonize
-
+from setuptools import Extension, setup
 
 # # Set dynamic RPATH differently, depending on platform
 ldirs = []
