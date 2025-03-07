@@ -27,6 +27,7 @@ if sys.platform == "darwin":
 if sys.platform == "win32":
     ddirs = ["src/pypolyline/header.h"]
     platform_lib = "polylineffi.dll"
+ddirs.append("src/pypolyline/header.h")
 
 
 extension = Extension(
