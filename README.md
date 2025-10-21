@@ -6,11 +6,7 @@
 `pip install pypolyline`  
 
 ### Supported Python Versions
-- Python 3.9
-- Python 3.10
-- Python 3.11
-- Python 3.12
-- Python 3.13
+All [_currently_ supported Python versions](https://devguide.python.org/versions/).
 
 ### Supported Platforms
 - Linux (`manylinux*`-compatible, x86_64 and aarch64)
