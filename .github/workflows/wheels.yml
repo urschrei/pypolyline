@@ -10,7 +10,13 @@ env:
   rustlib: polylineffi
   wheelname: pypolyline
 
-on: [push, pull_request]
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+    tags:
+      - 'v*'
 
 jobs:
   get_latest_lib_tag:
