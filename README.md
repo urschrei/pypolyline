@@ -2,17 +2,18 @@
 
 # Fast Google [Polyline](https://developers.google.com/maps/documentation/utilities/polylinealgorithm) Encoding and Decoding
 
-## Installation
+# Installation
 `uv add pypolyline`  
 `pip install pypolyline`  
 
-### Installing for local development
+## Installing for local development
 1. Ensure you have a copy of `libpolylineffi` and `header.h` from https://github.com/urschrei/polyline-ffi/releases, and it's in the `src/pypolyline` subdir
 2. run `uv sync --dev`
 3. run `pytest .`
-4. If you make changes, you must rebuild the extension: `uv sync --reinstall`
 
-### Supported Python Versions
+Changes in `pyx` and `pxd` files, and the Rust library and header will bust the cache, triggering a rebuild when `uv` commands are run.
+
+## Supported Python Versions
 All [_currently_ supported Python versions](https://devguide.python.org/versions/).
 
 ### Supported Platforms
