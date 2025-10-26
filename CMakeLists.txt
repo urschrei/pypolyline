@@ -1,32 +1,32 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.21)
 project(${SKBUILD_PROJECT_NAME} LANGUAGES C)
+
+# Define source directory
+set(PYPOLYLINE_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/pypolyline")
 
 # Find Python
 find_package(
   Python
   COMPONENTS Interpreter Development.Module NumPy
   REQUIRED)
+include(UseCython)
 
 # Get NumPy include directory
 message(STATUS "NumPy include directory: ${Python_NumPy_INCLUDE_DIRS}")
 
-# Cythonize the .pyx file to .c
-add_custom_command(
-  OUTPUT cutil.c
-  COMMENT "Cythonizing ${CMAKE_CURRENT_SOURCE_DIR}/src/pypolyline/cutil.pyx"
-  COMMAND Python::Interpreter -m cython
-          "${CMAKE_CURRENT_SOURCE_DIR}/src/pypolyline/cutil.pyx"
-          --output-file cutil.c
-          -I "${CMAKE_CURRENT_SOURCE_DIR}/src/pypolyline"
-  DEPENDS src/pypolyline/cutil.pyx src/pypolyline/pypolyline_p.pxd
-  VERBATIM)
+cython_transpile(
+  "${PYPOLYLINE_SRC_DIR}/cutil.pyx"
+  LANGUAGE C
+  OUTPUT_VARIABLE cutil
+  CYTHON_ARGS -I "${PYPOLYLINE_SRC_DIR}"
+)
 
 # Create the extension module
-python_add_library(cutil MODULE cutil.c WITH_SOABI)
+python_add_library(cutil MODULE "${cutil}" WITH_SOABI)
 
 # Set include directories
 target_include_directories(cutil PRIVATE
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/pypolyline
+  ${PYPOLYLINE_SRC_DIR}
   ${Python_NumPy_INCLUDE_DIRS}
 )
 
@@ -34,11 +34,11 @@ target_include_directories(cutil PRIVATE
 # The library is pre-built and located in src/pypolyline/
 find_library(POLYLINE_LIBRARY
   NAMES polylineffi libpolylineffi
-  PATHS ${CMAKE_CURRENT_SOURCE_DIR}/src/pypolyline
+  PATHS ${PYPOLYLINE_SRC_DIR}
   NO_DEFAULT_PATH
   REQUIRED
 )
-message(STATUS "Found Rust polyline library: ${POLYLINE_LIBRARY}")
+message(STATUS "Found polyline Rust library: ${POLYLINE_LIBRARY}")
 
 target_link_libraries(cutil PRIVATE ${POLYLINE_LIBRARY})
 
@@ -67,9 +67,9 @@ elseif(WIN32)
   set(POLYLINE_LIB_NAME "polylineffi.dll")
 endif()
 
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/pypolyline/${POLYLINE_LIB_NAME}
+install(FILES ${PYPOLYLINE_SRC_DIR}/${POLYLINE_LIB_NAME}
         DESTINATION pypolyline)
 
 # Install header file
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/pypolyline/header.h
+install(FILES ${PYPOLYLINE_SRC_DIR}/header.h
         DESTINATION pypolyline)
