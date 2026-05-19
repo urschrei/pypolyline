@@ -13,7 +13,7 @@ class PolylineTests(unittest.TestCase):
     """Tests for py_polyline"""
 
     def setUp(self):
-        """make these available to all tests"""
+        """Make these available to all tests"""
         self.coords = [[-120.2, 38.5], [-120.95, 40.7], [-126.453, 43.252]]
         try:
             self.polyline = bytes("_p~iF~ps|U_ulLnnqC_mqNvxq`@", "utf-8")
