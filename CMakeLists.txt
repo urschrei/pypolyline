@@ -1,5 +1,8 @@
-cmake_minimum_required(VERSION 3.21)
-project(${SKBUILD_PROJECT_NAME} LANGUAGES C)
+cmake_minimum_required(VERSION 3.21...3.31)
+project(
+  ${SKBUILD_PROJECT_NAME}
+  VERSION ${SKBUILD_PROJECT_VERSION}
+  LANGUAGES C)
 
 # Define source directory
 set(PYPOLYLINE_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/pypolyline")
@@ -56,7 +59,7 @@ elseif(UNIX)
 endif()
 
 # Install the extension module
-install(TARGETS cutil DESTINATION pypolyline)
+install(TARGETS cutil DESTINATION ${SKBUILD_PROJECT_NAME})
 
 # Install the shared library
 if(APPLE)
@@ -65,11 +68,13 @@ elseif(UNIX)
   set(POLYLINE_LIB_NAME "libpolylineffi.so")
 elseif(WIN32)
   set(POLYLINE_LIB_NAME "polylineffi.dll")
+else()
+  message(FATAL_ERROR "Unsupported platform: cannot determine polyline library name")
 endif()
 
 install(FILES ${PYPOLYLINE_SRC_DIR}/${POLYLINE_LIB_NAME}
-        DESTINATION pypolyline)
+        DESTINATION ${SKBUILD_PROJECT_NAME})
 
 # Install header file
 install(FILES ${PYPOLYLINE_SRC_DIR}/header.h
-        DESTINATION pypolyline)
+        DESTINATION ${SKBUILD_PROJECT_NAME})

@@ -37,7 +37,7 @@ dev = [
 
 [tool.scikit-build]
 minimum-version = "build-system.requires"
-wheel.packages = ["src/convertbng"]
+wheel.packages = ["src/pypolyline"]
 
 [build-system]
 requires = [
