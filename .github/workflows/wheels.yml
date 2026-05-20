@@ -62,7 +62,7 @@ jobs:
           id: windows
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0  # Optional, use if you use setuptools_scm
           submodules: true  # Optional, use if you have submodules
@@ -142,7 +142,7 @@ jobs:
     name: Make SDist
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
       with:
         fetch-depth: 0  # Optional, use if you use setuptools_scm
         submodules: true  # Optional, use if you have submodules
@@ -171,7 +171,7 @@ jobs:
       contents: write
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
       with:
         fetch-depth: 0  # Optional, use if you use setuptools_scm
         submodules: true  # Optional, use if you have submodules
