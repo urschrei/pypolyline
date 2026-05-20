@@ -27,3 +27,7 @@ updates:
         applies-to: version-updates # Applies the group rule to version updates
         patterns:
           - "*"
+      python-security-dependencies:
+        applies-to: security-updates # Applies the group rule to security updates
+        patterns:
+          - "*"
