@@ -35,11 +35,22 @@ fn extract_coords(coords: &Bound<'_, PyAny>) -> PyResult<Vec<Coord<f64>>> {
                 )));
             }
         }
-        let flat = buf.to_vec(coords.py())?;
-        return Ok(flat
-            .chunks_exact(2)
-            .map(|c| Coord { x: c[0], y: c[1] })
-            .collect());
+        // Read C-contiguous buffers in place, and copy anything else into C order first
+        let py = coords.py();
+        return Ok(match buf.as_slice(py) {
+            Some(cells) => cells
+                .chunks_exact(2)
+                .map(|c| Coord {
+                    x: c[0].get(),
+                    y: c[1].get(),
+                })
+                .collect(),
+            None => buf
+                .to_vec(py)?
+                .chunks_exact(2)
+                .map(|c| Coord { x: c[0], y: c[1] })
+                .collect(),
+        });
     }
     let pairs: Vec<[f64; 2]> = coords.extract().map_err(|e| {
         let err = PyValueError::new_err("coordinates must be a sequence of (x, y) number pairs");
