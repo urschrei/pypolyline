@@ -7,11 +7,11 @@
 `pip install pypolyline`  
 
 ## Installing for local development
-1. Ensure you have a copy of `libpolylineffi` and `header.h` from https://github.com/urschrei/polyline-ffi/releases, and it's in the `src/pypolyline` subdir
-2. run `uv sync --dev`
-3. run `pytest .`
+1. Ensure you have a [Rust toolchain](https://rustup.rs) installed
+2. run `uv sync --dev` (this builds the extension using [maturin](https://www.maturin.rs))
+3. run `uv run pytest`
 
-Changes in `pyx` and `pxd` files, and the Rust library and header will bust the cache, triggering a rebuild when `uv` commands are run.
+Changes to `Cargo.toml`, `Cargo.lock`, or any `.rs` file will bust the cache, triggering a rebuild when `uv` commands are run.
 
 ## Supported Python Versions
 All [_currently_ supported Python versions](https://devguide.python.org/versions/).
@@ -24,7 +24,7 @@ Binary wheels target the CPython [Stable ABI](https://docs.python.org/3/c-api/st
 - Windows 64-bit
 
 ## Usage
-Coordinates must be in (`Longitude, Latitude`) order
+Coordinates must be in (`Longitude, Latitude`) order, and can be any sequence of (`x, y`) pairs, or an `(N, 2)` NumPy array (or any other object supporting the buffer protocol). Polylines can be `bytes` or `str`. NumPy is not required.
 
 ```python
 from pypolyline.cutil import encode_coordinates, decode_polyline
@@ -44,16 +44,18 @@ decoded_coords = decode_polyline(polyline, 5)
 ```
 
 ## Error Handling
-Failure to encode coordinates, or to decode a supplied Polyline, will raise a `RuntimeError` containing information about the invalid input.
+- Failure to encode coordinates, or to decode a supplied Polyline, will raise a `RuntimeError` containing information about the invalid input.
+- A precision other than 5 or 6, or coordinates that aren't `(N, 2)`, will raise a `ValueError`.
+- A Polyline that isn't `bytes` or `str` will raise a `TypeError`.
 
 
 ## How it Works
-FFI and a [Rust binary](https://github.com/urschrei/polyline-ffi)
+[PyO3](https://pyo3.rs) bindings to the Rust [polyline](https://crates.io/crates/polyline) crate. The GIL is released while encoding and decoding.
 
 ## Is It Fast
 …Yes.  
 You can verify this by installing the `polyline` package, then running [`benchmarks.py`](benchmarks.py), a calibrated benchmark using `cProfile`.  
-On an M2 MBP, The [pure-Python](https://pypi.org/project/polyline/) test runs in ~2500 ms, the [Flexpolyline](https://pypi.org/project/flexpolyline/) benchmark runs in ~1500 ms and The Rust + Cython benchmark runs in around 80 ms (30 x and 17.5 x faster, respectively).
+On an M2 MBP, The [pure-Python](https://pypi.org/project/polyline/) test runs in ~2500 ms, the [Flexpolyline](https://pypi.org/project/flexpolyline/) benchmark runs in ~1500 ms and the Rust benchmark runs in around 80 ms (30 x and 17.5 x faster, respectively).
 
 ## License
 [The Blue Oak Model Licence 1.0.0](LICENCE.md)

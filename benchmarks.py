@@ -19,7 +19,7 @@ calibration = np.mean([pr.calibrate(100000) for x in range(5)])
 profile.Profile.bias = calibration
 print("Calibration complete, running benchmarks\n")
 bmarks = [
-    ("benches/benchmark_rust.py", "benches/output_stats_rust", "Rust + Cython"),
+    ("benches/benchmark_rust.py", "benches/output_stats_rust", "Rust"),
     ("benches/benchmark_python.py", "benches/output_stats_python", "Pure Python"),
     (
         "benches/benchmark_flexpolyline.py",

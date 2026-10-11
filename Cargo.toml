@@ -1,0 +1,24 @@
+[package]
+name = "pypolyline"
+version = "1.0.0"
+authors = ["Stephan Hügel <urschrei@gmail.com>"]
+description = "Fast Google Polyline encoding and decoding using Rust"
+repository = "https://github.com/urschrei/pypolyline"
+license = "BlueOak-1.0.0"
+edition = "2024"
+rust-version = "1.85"
+publish = false
+
+[lib]
+name = "cutil"
+crate-type = ["cdylib"]
+
+[dependencies]
+geo-types = "0.7.20"
+polyline = "0.11.0"
+pyo3 = { version = "0.29.3", features = ["abi3-py311"] }
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true
