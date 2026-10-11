@@ -132,20 +132,20 @@ wheels = [
 name = "pypolyline"
 version = "1.0.0"
 source = { editable = "." }
-dependencies = [
-    { name = "numpy" },
-]
 
 [package.dev-dependencies]
 dev = [
+    { name = "numpy" },
     { name = "pytest" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "numpy", specifier = ">=2.0.0" }]
 
 [package.metadata.requires-dev]
-dev = [{ name = "pytest", specifier = ">=8.4.1" }]
+dev = [
+    { name = "numpy", specifier = ">=2.0.0" },
+    { name = "pytest", specifier = ">=8.4.1" },
+]
 
 [[package]]
 name = "pytest"

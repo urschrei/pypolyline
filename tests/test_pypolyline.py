@@ -1,4 +1,5 @@
 import unittest
+from array import array
 
 import pytest
 from pypolyline.cutil import (
@@ -177,3 +178,88 @@ class PolylineTests(unittest.TestCase):
             # does encoded string match Google's output?
             self.assertEqual(encoded, s)
             self.assertEqual(cencoded, s)
+
+
+def _buffer(coords):
+    """Build an (N, 2) float64 buffer, without needing NumPy"""
+    flat = array("d", [c for pair in coords for c in pair])
+    return memoryview(flat).cast("B").cast("d", shape=[len(coords), 2])
+
+
+COORDS = [[-120.2, 38.5], [-120.95, 40.7], [-126.453, 43.252]]
+POLYLINE = b"_p~iF~ps|U_ulLnnqC_mqNvxq`@"
+
+
+def test_encode_buffer():
+    assert cencode_coordinates(_buffer(COORDS), 5) == POLYLINE
+
+
+def test_encode_tuples():
+    assert cencode_coordinates(tuple(tuple(c) for c in COORDS), 5) == POLYLINE
+
+
+def test_encode_numpy_layouts():
+    np = pytest.importorskip("numpy")
+    arr = np.array(COORDS)
+    assert cencode_coordinates(arr, 5) == POLYLINE
+    assert cencode_coordinates(np.asfortranarray(arr), 5) == POLYLINE
+    assert cencode_coordinates(arr.astype(np.float32), 5) == POLYLINE
+    assert cencode_coordinates(arr[::2], 5) == cencode_coordinates(COORDS[::2], 5)
+    assert cencode_coordinates(np.empty((0, 2)), 5) == b""
+    with pytest.raises(ValueError, match=r"shape \(N, 2\)"):
+        cencode_coordinates(np.zeros((2, 3)), 5)
+
+
+def test_encode_empty():
+    assert cencode_coordinates([], 5) == b""
+
+
+@pytest.mark.parametrize(
+    "coords",
+    [
+        [[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]],
+        [[1.0, 2.0], [3.0]],
+        [1.0, 2.0],
+        memoryview(array("d", [1.0, 2.0, 3.0, 4.0, 5.0, 6.0]))
+        .cast("B")
+        .cast("d", shape=[2, 3]),
+        memoryview(array("d", [1.0, 2.0])),
+    ],
+)
+def test_encode_bad_shape(coords):
+    with pytest.raises(ValueError):
+        cencode_coordinates(coords, 5)
+
+
+def test_encode_bad_coordinates_message():
+    with pytest.raises(
+        RuntimeError, match=r"^latitude out of bounds: 95 at position 0$"
+    ):
+        cencode_coordinates([[0.0, 95.0]], 5)
+
+
+@pytest.mark.parametrize("precision", [4, 7, -1])
+def test_bad_precision(precision):
+    with pytest.raises(ValueError, match="precision must be 5 or 6"):
+        cencode_coordinates(COORDS, precision)
+    with pytest.raises(ValueError, match="precision must be 5 or 6"):
+        cdecode_polyline(POLYLINE, precision)
+
+
+def test_decode_str():
+    assert cdecode_polyline(POLYLINE.decode(), 5) == COORDS
+
+
+def test_decode_empty():
+    assert cdecode_polyline(b"", 5) == []
+
+
+@pytest.mark.parametrize("polyline", [None, bytearray(POLYLINE), 5])
+def test_decode_bad_type(polyline):
+    with pytest.raises(TypeError, match="polyline must be bytes or str"):
+        cdecode_polyline(polyline, 5)
+
+
+def test_decode_invalid_utf8():
+    with pytest.raises(RuntimeError, match="Polyline could not be decoded"):
+        cdecode_polyline(b"\xff\xfe", 5)
