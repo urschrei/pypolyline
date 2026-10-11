@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.0] - Unreleased
+## [1.0.0] - 2026-10-11
 
 ### Changed
 
@@ -41,5 +41,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 See the [commit history](https://github.com/urschrei/pypolyline/commits/v0.5.8).
 
-[1.0.0]: https://github.com/urschrei/pypolyline/compare/v0.5.8...HEAD
+[1.0.0]: https://github.com/urschrei/pypolyline/compare/v0.5.8...v1.0.0
 [0.5.8]: https://github.com/urschrei/pypolyline/releases/tag/v0.5.8
