@@ -16,7 +16,7 @@ crate-type = ["cdylib"]
 [dependencies]
 geo-types = "0.7.20"
 polyline = "0.11.0"
-pyo3 = { version = "0.29.3", features = ["abi3-py311"] }
+pyo3 = { version = "0.30.1", features = ["abi3-py311"] }
 
 [profile.release]
 lto = true
